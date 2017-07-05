@@ -31,6 +31,11 @@
                     templateUrl: 'views/stusign.html',
                     controller: "stusignController"
                 })
+                .state('appointrecord', {
+                    url: '/appointrecord',
+                    templateUrl: 'views/appointrecord.html',
+                    controller: "appointrecordController"
+                })
 
             ;
         }])
