@@ -36,6 +36,11 @@
                     templateUrl: 'views/appointrecord.html',
                     controller: "appointrecordController"
                 })
+                .state('stucourse', {
+                    url: '/stucourse',
+                    templateUrl: 'views/stucourse.html',
+                    controller: "stucourseController"
+                })
 
             ;
         }])

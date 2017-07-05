@@ -1,0 +1,119 @@
+<style>
+    li{
+        list-style-type: none;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="nav" ui-sref="stuindex">
+            <h5><span class="glyphicon glyphicon-chevron-left" style="margin-left: 7px;" ng-click="back()"></span>我的课程</h5>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="background: #f8f8f8;height: 10px;width: 100%">
+        </div>
+        <div class="TabNav">
+            <ul ng-init='activeTab=1' class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px">
+                <li ng-class='{active:activeTab==1}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center;color: #f56158" ng-click='activeTab=1'>
+                    全部课程
+                </li>
+                <li ng-class='{active:activeTab==2}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center" ng-click='activeTab=2'>
+                    可用的
+                </li>
+                <li ng-class='{active:activeTab==3}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center" ng-click='activeTab=3'>
+                    已练完
+                </li>
+            </ul>
+        </div>
+
+        <div class="TabCon">
+            <div ng-show='activeTab==1'>
+                <div class="col-xs-12 col-sm-12 col-md-12"
+                     ng-repeat="all in stuCourse.allCourse"
+                     style="background: #f8f8f8;padding: 0px;width: 100%;height: 200px;margin-bottom: 10px">
+                    <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
+                        <div style="width:100%;height: 180px;background: url('{{all.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 0px 0px 0px 15px;">
+                        <h5>{{all.courseName}}</h5>
+                        <h6><span style="color: #a1a1a1">{{all.courseIntroduction}}</span></h6>
+                        <h6>
+                            <span style="color: red">￥{{all.coursePrice}} </span>
+                            <span style="font-weight: 900">·</span>
+                            <span style="color: #a1a1a1">{{all.courseClassHour}}课时</span>
+                        </h6>
+                        <h6><span style="color: #a1a1a1">{{all.coachName}}</span></h6>
+                        <h6><span style="color: #a1a1a1">上课时间：{{all.courseTime}}</span></h6>
+                        <h6>
+                            <span style="color: #a1a1a1">剩余签到次数：</span>
+                            <span style="color: red">{{all.signCount}}</span>
+                        </h6>
+                        <button ng-if="all.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span>预约</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div ng-show='activeTab==2'>
+                <div class="col-xs-12 col-sm-12 col-md-12"
+                     ng-repeat="start in stuCourse.startCourse"
+                     style="background: #f8f8f8;padding: 0px;width: 100%;height: 200px;margin-bottom: 10px">
+                    <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
+                        <div style="width:100%;height: 180px;background: url('{{start.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 0px 0px 0px 15px;">
+                        <h5>{{start.courseName}}</h5>
+                        <h6><span style="color: #a1a1a1">{{start.courseIntroduction}}</span></h6>
+                        <h6>
+                            <span style="color: red">￥{{start.coursePrice}} </span>
+                            <span style="font-weight: 900">·</span>
+                            <span style="color: #a1a1a1">{{start.courseClassHour}}课时</span>
+                        </h6>
+                        <h6><span style="color: #a1a1a1">{{start.coachName}}</span></h6>
+                        <h6><span style="color: #a1a1a1">上课时间：{{start.courseTime}}</span></h6>
+                        <h6>
+                            <span style="color: #a1a1a1">剩余签到次数：</span>
+                            <span style="color: red">{{start.signCount}}</span>
+                        </h6>
+                        <button ng-if="start.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span>预约</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div ng-show='activeTab==3'>
+                <div class="col-xs-12 col-sm-12 col-md-12"
+                     ng-repeat="finish in stuCourse.finishCourse"
+                     style="background: #f8f8f8;padding: 0px;width: 100%;height: 200px;margin-bottom: 10px">
+                    <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
+                        <div style="width:100%;height: 180px;background: url('{{finish.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 0px 0px 0px 15px;">
+                        <h5>{{finish.courseName}}</h5>
+                        <h6><span style="color: #a1a1a1">{{finish.courseIntroduction}}</span></h6>
+                        <h6>
+                            <span style="color: red">￥{{finish.coursePrice}} </span>
+                            <span style="font-weight: 900">·</span>
+                            <span style="color: #a1a1a1">{{finish.courseClassHour}}课时</span>
+                        </h6>
+                        <h6><span style="color: #a1a1a1">{{finish.coachName}}</span></h6>
+                        <h6><span style="color: #a1a1a1">上课时间：{{finish.courseTime}}</span></h6>
+                        <h6>
+                            <span style="color: #a1a1a1">剩余签到次数：</span>
+                            <span style="color: red">{{finish.signCount}}</span>
+                        </h6>
+                        <button ng-if="finish.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span>预约</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
