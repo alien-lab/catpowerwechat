@@ -31,6 +31,16 @@
                     templateUrl: 'views/stusign.html',
                     controller: "stusignController"
                 })
+                .state('historylog', {
+                    url: '/stusign/historylog/:courseId',
+                    templateUrl: 'views/historylog.html',
+                    controller:'historylogController'
+                })
+                .state('signsuccess', {
+                    url: '/signsuccess',
+                    templateUrl: 'views/signsuccess.html',
+                    controller:'signsuccessController'
+                })
 
             ;
         }])
