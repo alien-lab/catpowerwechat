@@ -47,7 +47,7 @@
                             <span style="color: #a1a1a1">剩余签到次数：</span>
                             <span style="color: red">{{all.signCount}}</span>
                         </h6>
-                        <button ng-if="all.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
+                        <button ng-if="all.signCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
@@ -77,7 +77,7 @@
                             <span style="color: #a1a1a1">剩余签到次数：</span>
                             <span style="color: red">{{start.signCount}}</span>
                         </h6>
-                        <button ng-if="start.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
+                        <button ng-if="start.signCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
@@ -106,10 +106,6 @@
                             <span style="color: #a1a1a1">剩余签到次数：</span>
                             <span style="color: red">{{finish.signCount}}</span>
                         </h6>
-                        <button ng-if="finish.signCount!=0" class="btn btn-success" style="border:none;background: #50db39">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            <span>预约</span>
-                        </button>
                     </div>
                 </div>
             </div>
