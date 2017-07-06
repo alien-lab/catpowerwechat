@@ -26,11 +26,6 @@
                     templateUrl: 'views/stuappointment.html',
                     controller: "stuappointmentController"
                 })
-                .state('stusign', {
-                    url: '/stusign',
-                    templateUrl: 'views/stusign.html',
-                    controller: "stusignController"
-                })
                 .state('appointrecord', {
                     url: '/appointrecord',
                     templateUrl: 'views/appointrecord.html',
@@ -40,6 +35,21 @@
                     url: '/stucourse',
                     templateUrl: 'views/stucourse.html',
                     controller: "stucourseController"
+                })
+                .state('stusign', {
+                    url: '/stusign',
+                    templateUrl: 'views/stusign.html',
+                    controller: "stusignController"
+                })
+                .state('historylog', {
+                    url: '/stusign/historylog/:courseId',
+                    templateUrl: 'views/historylog.html',
+                    controller:'historylogController'
+                })
+                .state('signsuccess', {
+                    url: '/signsuccess',
+                    templateUrl: 'views/signsuccess.html',
+                    controller:'signsuccessController'
                 })
 
             ;
