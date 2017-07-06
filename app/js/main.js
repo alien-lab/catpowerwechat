@@ -31,15 +31,15 @@
                     templateUrl: 'views/stusign.html',
                     controller: "stusignController"
                 })
-                .state('historylog', {
-                    url: '/stusign/historylog/:courseId',
-                    templateUrl: 'views/historylog.html',
-                    controller:'historylogController'
+                .state('appointrecord', {
+                    url: '/appointrecord',
+                    templateUrl: 'views/appointrecord.html',
+                    controller: "appointrecordController"
                 })
-                .state('signsuccess', {
-                    url: '/signsuccess',
-                    templateUrl: 'views/signsuccess.html',
-                    controller:'signsuccessController'
+                .state('stucourse', {
+                    url: '/stucourse',
+                    templateUrl: 'views/stucourse.html',
+                    controller: "stucourseController"
                 })
 
             ;
