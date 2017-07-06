@@ -46,6 +46,11 @@
                     templateUrl: 'views/historylog.html',
                     controller:'historylogController'
                 })
+                .state('coachadvice', {
+                    url: '/stusign//historylog/coachadvice/:courseScheId',
+                    templateUrl: 'views/coachadvice.html',
+                    controller:'coachadviceController'
+                })
                 .state('signsuccess', {
                     url: '/signsuccess',
                     templateUrl: 'views/signsuccess.html',

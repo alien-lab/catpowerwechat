@@ -13,12 +13,16 @@
         this.loadMyHistoryLog = function () {
             var signHistoryLog = [
                 {
+                    courseScheId:'1',
                     signTime: '2017-7-4 17:50'
                 }, {
+                    courseScheId:'2',
                     signTime: '2017-7-4 17:50',
                 }, {
+                    courseScheId:'3',
                     signTime: '2017-7-4 17:50',
                 }, {
+                    courseScheId:'4',
                     signTime: '2017-7-4 18:10',
                 }];
             return signHistoryLog;
