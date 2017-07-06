@@ -1,8 +1,43 @@
-<nav class="navbar navbar-default">
-    <div class="navbar-header"><h3>评价教练</h3></div>
-</nav>
+<style>
+    li{
+        list-style-type: none;
+    }
+</style>
+<!--学员对教练进行评价-->
 <div class="container">
     <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center;margin-top: 4%;">
+            <img src="../img/coach2.jpg" class="img-circle" style="width: 78px;height: 78px;">
+            <h4>杨教练</h4>
+            <h6>
+                <span style="color: #a1a1a1">课程：</span>
+                <span style="color: red">有氧健身操</span>
+            </h6>
+            <h6><span style="color: #a1a1a1">上课时间：2017-7-6 13：30</span></h6>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="height: 10px;background: #f8f8f8"></div>
+        <div class="TabNav">
+            <ul ng-init='activeTab=1' class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px">
+                <li ng-class='{active:activeTab==1}' class="col-xs-6 col-sm-6 col-md-6" style="text-align: center;color: #259b24;padding: 6px;background: #c4e8c3;border-radius: 10px;font-size: 18px" ng-click='activeTab=1'>
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <span>好评</span>
+                </li>
+                <li ng-class='{active:activeTab==2}' class="col-xs-6 col-sm-6 col-md-6" style="text-align: center;color: #e51c23;padding: 6px;background: #fce1e1;border-radius: 10px;font-size: 18px" ng-click='activeTab=2'>
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                    <span>差评</span>
+                </li>
+            </ul>
+        </div>
+        <div class="TabCon">
+            <div ng-show='activeTab==1'>
+                <input type="range"/>
+            </div>
+            <div ng-show='activeTab==2'>
+                <h5><span style="color: #f56158;padding-left: 10px">投诉留言：</span></h5>
+                <div class="col-xs-12 col-sm-12 col-md-12" style="background-color: #f8f8f8;border: 1px solid #e5e5e5;height: 100px;padding: 15px;overflow: auto;" contenteditable="true">
+                </div>
+            </div>
 
+        </div>
     </div>
 </div>
