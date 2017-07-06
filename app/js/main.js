@@ -51,6 +51,11 @@
                     templateUrl: 'views/signsuccess.html',
                     controller:'signsuccessController'
                 })
+                .state('stucoach', {
+                    url: '/stucoach',
+                    templateUrl: 'views/stucoach.html',
+                    controller:'stucoachController'
+                })
 
             ;
         }])
