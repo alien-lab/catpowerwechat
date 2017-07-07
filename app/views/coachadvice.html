@@ -1,5 +1,5 @@
 <div class="nav">
-    <h5><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;" ng-click="back()"
+    <h5 ui-sref="historylog({courseId:coachadvice.courseId})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
     ></span>返回</h5>
 </div>
 <div style="background-color: #f8f8f8;height: 5px;"></div>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-11 col-sm-11 col-xs-11" style="margin:0px;padding: 0px 10px 0px 0px ;">
                 <h4 style="color:#f56158; ">饮食建议：</h4>
-                <p><h5 style="line-height: 20px">一定要多吃肉多吃肉多吃肉，恩要多吃肉，多吃肉，多吃甜食，多喝碳酸饮料，多睡觉，恩，就这样</h5></p>
+                <p><h5 style="line-height: 20px">{{coachadvice.eatInformation}}</h5></p>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-11 col-sm-11 col-xs-11" style="margin:0px;padding: 0px 10px 0px 0px ;">
                 <h4 style="color:#33cc33; ">健身建议：</h4>
-                <p><h5 style="line-height: 20px">没事多去跑步多去运动，多走路，多看风景，多看路，多种树，多造福人民，恩，就这样。</h5></p>
+                <p><h5 style="line-height: 20px">{{coachadvice.fitInformation}}</h5></p>
             </div>
         </div>
     </div>
