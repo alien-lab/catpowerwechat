@@ -1,0 +1,57 @@
+<style>
+    li{
+        list-style-type: none;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 4%;margin-bottom: 10px">
+            <img src="../img/coach2.jpg" class="img-circle" style="width: 78px;height: 78px">
+            <h4 style="margin-top: -25px;padding-left: 85px;">杨教练</h4>
+            <div ui-sref="coachstu" style="float: right;margin-top: -30px;">
+                <span class="glyphicon glyphicon-user" style="color: #50db39;font-size: 18px">
+                    <span style="color: #a1a1a1;">28</span>
+                    <span class="glyphicon glyphicon-menu-right" style="color: #a1a1a1;"></span>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="background: #f8f8f8;height: 10px;width: 100%">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%">
+            <h5>预约信息</h5>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" ng-repeat="appoint in appointInfo.appInfo"
+             style="background: #f8f8f8;width: 100%;margin-bottom: 10px">
+            <div style="padding-top: 10px;margin-bottom: 10px;">
+                <span class="glyphicon glyphicon-time" style="color: #a1a1a1"></span>
+                <span>{{appoint.time}}</span>
+            </div>
+            <div ng-repeat="learnInfo in appoint.learnerInfo" style="margin-bottom: 5px;border-bottom: 1px solid #ffffff">
+                <img ng-src="{{learnInfo.head}}" class="img-circle" style="width: 56px;height: 56px">
+                <h5 style="margin-top: -25px;padding-left: 70px;">{{learnInfo.learnerName}}</h5>
+                <div style="float: right;margin-top: -30px;color: #f56158">
+                    {{learnInfo.courseName}}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%">
+            <h5>未预约的课程数据</h5>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" ng-repeat="disappoint in appointInfo.disappInfo"
+             style="background: #f8f8f8;width: 100%;margin-bottom: 10px">
+            <div style="padding-top: 10px;margin-bottom: 10px;">
+                <span class="glyphicon glyphicon-time" style="color: #a1a1a1"></span>
+                <span>{{disappoint.time}}</span>
+            </div>
+            <div ng-repeat="learnInfo in disappoint.learnerInfo" style="margin-bottom: 5px;border-bottom: 1px solid #ffffff">
+                <img ng-src="{{learnInfo.head}}" class="img-circle" style="width: 56px;height: 56px">
+                <h5 style="margin-top: -25px;padding-left: 70px;">{{learnInfo.learnerName}}</h5>
+                <div style="float: right;margin-top: -30px;">
+                    {{learnInfo.courseName}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
