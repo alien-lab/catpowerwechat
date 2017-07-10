@@ -76,6 +76,11 @@
                     templateUrl: 'views/coachstu.html',
                     controller:'coachstuController'
                 })
+                .state('keepfit', {
+                    url: '/keepfit/:courseScheId',
+                    templateUrl: 'views/keepfit.html',
+                    controller:'keepfitController'
+                })
 
             ;
         }])
