@@ -66,7 +66,11 @@
                     templateUrl: 'views/fitinformation.html',
                     controller:'fitinformationController'
                 })
-
+                .state('keepfit', {
+                    url: '/keepfit/:courseScheId',
+                    templateUrl: 'views/keepfit.html',
+                    controller:'keepfitController'
+                })
             ;
         }])
     ;
