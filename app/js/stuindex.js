@@ -4,9 +4,29 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuindexController",["$scope",function($scope){
-
+    app.controller("stuindexController",["$scope","stuindexService",function($scope,stuindexService){
+        /*console.log("返回的参数："+$rootScope.openid);*/
+        stuindexService.loadStuIndex("123456",function (data) {
+            $scope.learnerIndex=data;
+             /*console.log("返回的参数："+data)*/
+        })
     }]);
 
+    app.service("stuindexService",["$http","domain",function ($http,domain) {
+        this.loadStuIndex=function (openid,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-index/learnInfo/'+openid
+            }).then(function (data) {
+                /*$scope.learnerIndex=data;
+                console.log(data)*/
+                console.log("返回的参数："+data)
+                if(callback){
+                    callback(data);
+                }
+            })
+        }
+
+    }]);
 
 })();
