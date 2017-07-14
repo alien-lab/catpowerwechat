@@ -8,7 +8,7 @@
         /*console.log("返回的参数："+$rootScope.openid);*/
         stuindexService.loadStuIndex("123456",function (data) {
             $scope.learnerIndex=data;
-             /*console.log("返回的参数："+data)*/
+            console.log($scope.learnerIndex)
         })
     }]);
 
@@ -18,11 +18,8 @@
                 method:'GET',
                 url:domain+'api/learner-index/learnInfo/'+openid
             }).then(function (data) {
-                /*$scope.learnerIndex=data;
-                console.log(data)*/
-                console.log("返回的参数："+data)
                 if(callback){
-                    callback(data);
+                    callback(data.data);
                 }
             })
         }
