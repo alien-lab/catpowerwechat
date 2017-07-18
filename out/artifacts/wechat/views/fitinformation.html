@@ -1,0 +1,120 @@
+<style>
+    li{
+        list-style-type: none;
+    }
+</style>
+<div class="nav">
+    <h5><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
+              ng-click="back()"></span>返回</h5>
+</div>
+<div style="background-color: #f8f8f8;height: 5px;"></div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-12" style="margin: 0px; padding: 0px;">
+        <div class="col-xs-4 col-sm-4 col-lg-4"><h6 style="color: #f56158;margin-left: 10px">体检记录</h6></div>
+        <div class="col-xs-4 col-sm-4 col-lg-4" style="margin: 0px; padding: 0px;"></div>
+        <div class="col-xs-4 col-sm-4 col-lg-4" style="margin: 0px; padding: 0px;">
+            <select class="combobox" style="border-radius: 3px;margin-top: 7px;float: left;margin-right: 10px">
+                <option value="all">全部</option>
+                <option value="weak" >最近一周</option>
+                <option value="month">最近一个月</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 col-xs-12 col-lg-12" style="margin: 0px;padding: 0px;background:  #f8f8f8;height: 5px;"></div>
+<div class="col-sm-12 col-xs-12 col-lg-12" style="margin: 0px;padding: 0px;">
+    <div class="TabNav">
+        <ul ng-init='activeTab=1' class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px">
+            <li ng-class='{active:activeTab==1}' class="col-xs-6 col-sm-6 col-md-6" style="text-align: center;" ng-click='activeTab=1'>
+                数据显示
+            </li>
+            <li ng-class='{active:activeTab==2}' class="col-xs-6 col-sm-6 col-md-6" style="text-align: center" ng-click='activeTab=2'>
+                图表显示
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="TabCon">
+    <div ng-show='activeTab==1'>
+        <div class="container" style="margin: 0px;padding: 0px;">
+            <div class="col-sm-12 col-xs-12 col-lg-12"
+                 style="margin: 0px;padding: 0px;height: 5px;background-color: #f8f8f8;"></div>
+            <div class="col-sm-12 col-xs-12 col-lg-12" ng-repeat="fitlog in fitLogs" style="margin: 0px 0px 0px 0px;padding: 0px;background: whitesmoke">
+                <div class="col-sm-1 col-xs-1  col-lg-1" ></div>
+                <div class="col-sm-10 col-xs-10 col-lg-10" >
+                    <div class="thumbnail" style="border: 1px solid #33cc33;margin-top:15px;background: url('http://img.zcool.cn/community/011adf57faf89fa84a0e282b486f20.gif');background-size: cover;">
+                        <div class="caption" style="text-align: center;">
+                            <p>身高：{{fitlog.bodytest.height}}&nbsp;&nbsp;cm</p>
+                            <p>体重：{{fitlog.bodytest.weight}}&nbsp;&nbsp;kg</p>
+                            <p>肥胖类型：{{fitlog.bodytest.fattype}}<p>
+                            <p>体检时间：{{fitlog.bodytest.checktime}}</p>
+                            <p><a ui-sref="keepfit({courseScheId:fitlog.courseScheId})">查看详情</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1 col-xs-1  col-lg-1" ></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show='activeTab==2'>
+        <div class="container">
+            <div class="col-sm-12 col-xs-12 col-lg-12"
+                 style="margin: 0px;padding: 0px;height: 5px;background-color: #f8f8f8;"></div>
+            <div class="col-sm-12 col-xs-12 col-lg-12" style="margin: 0px;padding: 0px;height: 300px;" id="main">
+                <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+
+        legend: {
+            top:'20px',
+            data:['体重','腰臀比','体脂率']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                magicType: {show: true, type: ['stack', 'tiled']},
+                saveAsImage: {show: true}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['2017-7-5','2017-7-6','2017-7-7','2017-7-8','2017-7-9','2017-7-10','2017-7-11']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '体重',
+                type: 'line',
+                smooth: true,
+                data: [10, 12, 21, 54, 260, 830, 710]
+            },
+            {
+                name: '腰臀比',
+                type: 'line',
+                smooth: true,
+                data: [30, 182, 434, 791, 390, 30, 10]
+            },
+            {
+                name: '体脂率',
+                type: 'line',
+                smooth: true,
+                data: [1320, 1132, 601, 234, 120, 90, 20]
+            }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+
