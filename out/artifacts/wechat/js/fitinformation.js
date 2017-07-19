@@ -5,13 +5,24 @@
     'use strict'
     var app=angular.module("alienlab");
     app.controller("fitinformationController",["$scope","fitnessService",function ($scope,fitnessService) {
-        $scope.fitLogs=fitnessService.loadMyFitLog();
-        console.log($scope.fitLogs);
+       fitnessService.loadMyFitLog(2,function (data) {
+           $scope.fitLogs= data;
+       });
+        //console.log($scope.fitLogs);
 
     }]);
-    app.service("fitnessService",[function () {
-        this.loadMyFitLog = function () {
-            var fitlog=[
+    app.service("fitnessService",["$http","domain",function ($http,domain) {
+        this.loadMyFitLog = function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-infos/fitlog/'+learnerId
+            }).then(function (data) {
+                if (callback) {
+                    callback(data.data);
+                }
+            })
+        }
+           /* var fitlog=[
                 {
                     "courseScheId":"1",
                     "bodytest":{
@@ -47,6 +58,6 @@
                 }
             ]
             return fitlog;
-        }
+        }*/
     }])
 })();

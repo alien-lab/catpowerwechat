@@ -5,13 +5,25 @@
     'use strict';
     var app=angular.module("alienlab");
     app.controller("appointrecordController",["$scope","appointrecordService",function($scope,appointrecordService){
-        $scope.appointRecord = appointrecordService.loadAppointRecord();
+        $scope.appointRecord = appointrecordService.loadAppointRecord(2,function (data) {
+            $scope.appointRecord=data;
+            console.log($scope.appointRecord)
+        });
         console.log($scope.appointRecord)
     }]);
 
-    app.service("appointrecordService",[function () {
-        this.loadAppointRecord=function () {
-            var appointRecord =
+    app.service("appointrecordService",["$http","domain",function ($http,domain) {
+        this.loadAppointRecord=function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-appointment/allRecord/'+learnerId
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data);
+                }
+            })
+        }
+            /*var appointRecord =
                 {
                     "all":[
                         {
@@ -84,7 +96,7 @@
                     ]
                 }
             return appointRecord;
-        }
+        }*/
     }])
 
 })();
