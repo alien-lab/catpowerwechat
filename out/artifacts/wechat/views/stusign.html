@@ -1,0 +1,36 @@
+<style>
+    .col-xs-12{
+        color:#f56158 ;
+
+    }
+    .col-xs-12 .image{
+        background-color:#F5F5DC;
+    }
+
+
+    .nav{
+        margin-left:5px;
+    }
+
+
+</style>
+<div class="nav">
+    <h5><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;" ng-click="back()"></span>签到记录</h5>
+</div>
+<div style="background-color: #f8f8f8;height: 5px;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12"><h6>签到课程</h6></div>
+        <div class="col-xs-12 col-sm-12 col-md-12" ng-repeat="signlog in signLog" style="height:160px;background-color: #f8f8f8;margin: 10px 0px 0px 0px; padding: 0px;">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-md-image"  style="height:160px;padding: 5px 5px 5px 0px;background-size:cover;background-image: url('{{signlog.coursePicture}}'); background-repeat:no-repeat;">
+            </div>
+            <div class="col-xs-7 col-sm-7 col-md-7" style="height:160px;">
+                <h5 style="color: #000;min-height: 15px;">{{signlog.courseName}}</h5>
+                <h6 style="color: #a1a1a1;min-height: 15px;">{{signlog.coachName}}</h6>
+                <h6 style="color: #a1a1a1;min-height: 15px;">已签到的次数：<span>{{signlog.signCount}}</span></h6>
+                <h6 style="color: #a1a1a1;min-height: 15px;">最新时间：<span>{{signlog.recentSignTime}}</span></h6>
+                <button type="button" ui-sref= "historylog({courseId:signlog.courseId})" class="btn btn-default" style="border:1px solid #f56158;background: #FFF;color: #f56158;">历史签到记录</a></button>
+            </div>
+        </div>
+    </div>
+</div>

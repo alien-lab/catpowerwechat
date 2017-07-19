@@ -1,0 +1,39 @@
+<style>
+    .tip {
+        color: #f56158;
+    }
+</style>
+
+<div class="nav">
+    <h5 ui-sref="stusign"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
+              ></span>返回</h5>
+</div>
+<div style="background-color: #f8f8f8;height: 5px;"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 tip">
+            <h6>历史签到纪录</h6>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:#f8f8f8;height:6px;">
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <table class="table table-hover">
+                <thead>
+                    <th></th>
+                    <th >签到时间</th>
+                    <th >签到状态</th>
+                    <th></th>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="history in historyLog">
+                        <td><h5>{{$index+1}}</h5></td>
+                        <td><h5 style="width:98px;">{{history.signTime}}</h5></td>
+                        <td><h5 style="width:56px;">已签到</h5></td>
+                        <td><button class="btn btn-default" ui-sref= "coachadvice({courseScheId:history.courseScheId})" type="submit" style="border: 1px solid #f56158;background: #FFF;color: #f56158;" >教练建议</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
