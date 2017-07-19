@@ -14,9 +14,9 @@
         <div class="col-md-12 col-sm-12 col-xs-12 tip">
             <h6>历史签到纪录</h6>
         </div>
-        <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:#f8f8f8;height:6px;">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="background-color:#f8f8f8;height:6px;margin: 0px;padding: 0px;">
         </div>
-        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="margin: 0px;padding: 0px;">
             <table class="table table-hover">
                 <thead>
                     <th></th>
@@ -28,9 +28,9 @@
                 <tbody>
                     <tr ng-repeat="history in historyLog">
                         <td><h5>{{$index+1}}</h5></td>
-                        <td><h5 style="width:98px;">{{history.signTime}}</h5></td>
+                        <td><h5 style="width:114px;">{{history.chargeTime | date:'yyyy-MM-dd HH:mm'}}</h5></td>
                         <td><h5 style="width:56px;">已签到</h5></td>
-                        <td><button class="btn btn-default" ui-sref= "coachadvice({courseScheId:history.courseScheId})" type="submit" style="border: 1px solid #f56158;background: #FFF;color: #f56158;" >教练建议</button></td>
+                        <td><button class="btn btn-default" ui-sref= "coachadvice({courseScheId:history.courseScheduling.id})" type="submit" style="border: 1px solid #f56158;background: #FFF;color: #f56158;" >教练建议</button></td>
                     </tr>
                 </tbody>
             </table>
