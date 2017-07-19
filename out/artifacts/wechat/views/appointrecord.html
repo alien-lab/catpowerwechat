@@ -2,6 +2,9 @@
     li{
         list-style-type: none;
     }
+    .active{
+        color:#f56158;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -12,7 +15,7 @@
         </div>
         <div class="TabNav">
             <ul ng-init='activeTab=1' class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px">
-                <li ng-class='{active:activeTab==1}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center;color: #f56158" ng-click='activeTab=1'>
+                <li ng-class='{active:activeTab==1}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center;" ng-click='activeTab=1'>
                     全部预约
                 </li>
                 <li ng-class='{active:activeTab==2}' class="col-xs-4 col-sm-4 col-md-4" style="text-align: center" ng-click='activeTab=2'>
