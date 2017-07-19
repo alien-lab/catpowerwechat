@@ -5,13 +5,23 @@
     'use strict';
     var app = angular.module("alienlab");
     app.controller("stucoachController",["$scope","stucoachService",function ($scope,stucoachService) {
-        $scope.stucoash=stucoachService.loadStuCoach();
-        console.log($scope.stucoash)
+        stucoachService.loadStuCoach(2,function (data) {
+            $scope.stucoash=data;
+            console.log($scope.stucoash)
+        });
     }]);
 
-    app.service("stucoachService",[function () {
-        this.loadStuCoach=function () {
-            var stucoach =
+    app.service("stucoachService",["$http","domain",function ($http,domain) {
+        this.loadStuCoach=function (learnerId,callback) {
+            $http({
+                method:"GET",
+                url:domain+'api/buy-course/allCoach/'+learnerId
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data);
+                }
+            });
+            /*var stucoach =
             [
                 {
                     "coachName":"杨教练",
@@ -37,7 +47,7 @@
                 }
 
             ]
-            return stucoach;
+            return stucoach;*/
         }
     }]);
 })();

@@ -27,62 +27,62 @@
         <div class="TabCon">
             <div ng-show='activeTab==1'>
                 <div class="col-xs-12 col-sm-12 col-md-12"
-                     ng-repeat="all in appointRecord.all"
+                     ng-repeat="all in appointRecord.allAppointment"
                      style="background: #f8f8f8;padding: 0px;width: 100%;height: 160px;margin-bottom: 10px">
                     <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
-                        <div style="width:100%;height: 140px;background: url('{{all.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        <div style="width:100%;height: 140px;background: url('{{all.buyCourse.course.courseThumbnail}}');background-size: cover;background-repeat: no-repeat">
                         </div>
                     </div>
                     <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 5px 0px 0px 15px;">
-                      <h5>{{all.courseName}}</h5>
-                      <h6><span style="color: #a1a1a1">{{all.coachName}}</span></h6>
-                      <h6><span style="color: #a1a1a1">预约时间：{{all.appointTime}}</span></h6>
+                      <h5>{{all.buyCourse.course.courseName}}</h5>
+                      <h6><span style="color: #a1a1a1">{{all.buyCourse.coach.coachName}}</span></h6>
+                      <h6><span style="color: #a1a1a1">预约时间：{{all.appointmentDate  | date:'yyyy-MM-dd HH:mm'}}</span></h6>
                       <h6>
                           <span style="color: #a1a1a1">预约状态：</span>
-                          <span style="color: red">{{all.appointStatus}}</span>
+                          <span style="color: red">{{all.appointmentResult}}</span>
                       </h6>
-                      <button ng-if="all.appointStatus!='接受'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
+                      <button ng-if="all.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
 
             </div>
             <div ng-show='activeTab==2'>
                 <div class="col-xs-12 col-sm-12 col-md-12"
-                     ng-repeat="start in appointRecord.start"
+                     ng-repeat="start in appointRecord.appointing"
                      style="background: #f8f8f8;padding: 0px;width: 100%;height: 160px;margin-bottom: 10px">
                     <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
-                        <div style="width:100%;height: 140px;background: url('{{start.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        <div style="width:100%;height: 140px;background: url('{{start.buyCourse.course.courseThumbnail}}');background-size: cover;background-repeat: no-repeat">
                         </div>
                     </div>
                     <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 5px 0px 0px 15px;">
-                        <h5>{{start.courseName}}</h5>
-                        <h6><span style="color: #a1a1a1">{{start.coachName}}</span></h6>
-                        <h6><span style="color: #a1a1a1">预约时间：{{start.appointTime}}</span></h6>
+                        <h5>{{start.buyCourse.course.courseName}}</h5>
+                        <h6><span style="color: #a1a1a1">{{start.buyCourse.coach.coachName}}</span></h6>
+                        <h6><span style="color: #a1a1a1">预约时间：{{start.appointmentDate  | date:'yyyy-MM-dd HH:mm'}}</span></h6>
                         <h6>
                             <span style="color: #a1a1a1">预约状态：</span>
-                            <span style="color: red">{{start.appointStatus}}</span>
+                            <span style="color: red">{{start.appointmentResult}}</span>
                         </h6>
-                        <button ng-if="start.appointStatus!='接受'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
+                        <button ng-if="start.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
             </div>
             <div ng-show='activeTab==3'>
                 <div class="col-xs-12 col-sm-12 col-md-12"
-                     ng-repeat="finish in appointRecord.finish"
+                     ng-repeat="finish in appointRecord.appointed"
                      style="background: #f8f8f8;padding: 0px;width: 100%;height: 160px;margin-bottom: 10px">
                     <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
-                        <div style="width:100%;height: 140px;background: url('{{finish.courseLogo}}');background-size: cover;background-repeat: no-repeat">
+                        <div style="width:100%;height: 140px;background: url('{{finish.buyCourse.course.courseThumbnail}}');background-size: cover;background-repeat: no-repeat">
                         </div>
                     </div>
                     <div class="col-xs-7 col-sm-7 col-md-7" style="padding: 5px 0px 0px 15px;">
-                        <h5>{{finish.courseName}}</h5>
-                        <h6><span style="color: #a1a1a1">{{finish.coachName}}</span></h6>
-                        <h6><span style="color: #a1a1a1">预约时间：{{finish.appointTime}}</span></h6>
+                        <h5>{{finish.buyCourse.course.courseName}}</h5>
+                        <h6><span style="color: #a1a1a1">{{finish.buyCourse.coach.coachName}}</span></h6>
+                        <h6><span style="color: #a1a1a1">预约时间：{{finish.appointmentDate  | date:'yyyy-MM-dd HH:mm'}}</span></h6>
                         <h6>
                             <span style="color: #a1a1a1">预约状态：</span>
-                            <span style="color: red">{{finish.appointStatus}}</span>
+                            <span style="color: red">{{finish.appointmentResult}}</span>
                         </h6>
-                        <button ng-if="finish.appointStatus!='接受'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
+                        <button ng-if="finish.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
             </div>
