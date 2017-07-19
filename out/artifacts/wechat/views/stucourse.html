@@ -2,6 +2,9 @@
     li{
         list-style-type: none;
     }
+    .active{
+        color:#f56158;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -47,7 +50,7 @@
                             <span style="color: #a1a1a1">剩余课时：</span>
                             <span style="color: red">{{all.remainClass}}</span>
                         </h6>
-                        <button ng-if="all.remainClass!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
+                        <button ng-if="all.signInCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
@@ -79,7 +82,7 @@
                             <span style="color: #a1a1a1">剩余课时：</span>
                             <span style="color: red">{{start.remainClass}}</span>
                         </h6>
-                        <button ng-if="start.remainClass!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
+                        <button ng-if="start.signInCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
@@ -92,7 +95,7 @@
             </div>
             <div ng-show='activeTab==3'>
                 <div class="col-xs-12 col-sm-12 col-md-12"
-                     ng-if="stuCourse.finishCourse != null" ng-repeat="finish in stuCourse.finishCourse"
+                     ng-if="stuCourse.finishCourse" ng-repeat="finish in stuCourse.finishCourse"
                      style="background: #f8f8f8;padding: 0px;width: 100%;height: 200px;margin-bottom: 10px">
                     <div class="col-xs-5 col-sm-5 col-md-5" style="padding: 0px;margin: 10px 0px 0px 0px">
                         <div style="width:100%;height: 180px;background: url('{{finish.course.courseThumbnail}}');background-size: cover;background-repeat: no-repeat">
@@ -114,7 +117,7 @@
                         </h6>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12" ng-if="stuCourse.finishCourse">
+                <div class="col-xs-12 col-sm-12 col-md-12" ng-if="!stuCourse.finishCourse">
                     <h5>您还没有已经练完的课程！</h5>
                 </div>
             </div>

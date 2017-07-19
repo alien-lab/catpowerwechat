@@ -6,15 +6,26 @@
     var app = angular.module("alienlab");
     app.controller("stusignController", ["$scope", "stusignService", function ($scope, stusignService) {
         //加载我的课程
-        $scope.signLog = stusignService.loadMyCourse();
+        stusignService.loadMyCourse(2,function (data) {
+             $scope.signLog = data;
+        });
         console.log("消费记录" + $scope.signLog);
 
     }]);
 
 
-    app.service("stusignService", [function () {
-        this.loadMyCourse = function () {
-            var signLog = [
+    app.service("stusignService", ["$http","domain",function ($http,domain) {
+        this.loadMyCourse = function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-charges/stusign/'+learnerId
+            }).then(function(data){
+                if (callback) {
+                    callback(data.data);
+                }
+            });
+
+            /*var signLog = [
                 {
                     signId:'1',
                     courseId:'1',
@@ -48,7 +59,7 @@
                     recentSignTime: '2017-7-4 18:10',
                     coursePicture: 'http://img01.taopic.com/140921/318765-1409210H63729.jpg'
                 }];
-            return signLog;
+            return signLog;*/
         }
     }]);
 
