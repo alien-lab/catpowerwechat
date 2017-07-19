@@ -49,13 +49,13 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: center;margin-top: 4%;">
-            <img src="../img/coach2.jpg" class="img-circle" style="width: 78px;height: 78px;">
-            <h4>杨教练</h4>
+            <img src="{{courseInfo.coach.coachPicture}}" class="img-circle" style="width: 78px;height: 78px;">
+            <h4>{{courseInfo.coach.coachName}}</h4>
             <h6>
                 <span style="color: #a1a1a1">课程：</span>
-                <span style="color: red">有氧健身操</span>
+                <span style="color: red">{{courseInfo.course.courseName}}</span>
             </h6>
-            <h6><span style="color: #a1a1a1">上课时间：2017-7-6 13：30</span></h6>
+            <h6><span style="color: #a1a1a1">{{courseInfo.startTime | date:'yyyy-MM-dd HH:mm'}}</span></h6>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12" style="height: 10px;background: #f8f8f8"></div>
 
@@ -74,30 +74,33 @@
                 <span>服务一般般</span>
                 <span style="float: right">服务特别好</span>
             </div>
-            <input type="range" value="10" max="10" min="0" step="2" style="background-color: #259b24"/>
+            <input type="range" value="10" max="10" min="0" step="2" ng-model="service" style="background-color: #259b24"/>
 
             <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 10px">
                 <span>教练很普通</span>
                 <span style="float: right">教练很专业</span>
             </div>
-            <input type="range" value="10" max="10" min="0" step="2" style="background-color: #f2e56f"/>
+            <input type="range" value="10" max="10" min="0" step="2" ng-model="speciality" style="background-color: #f2e56f"/>
 
             <div class="col-xs-12 col-sm-12 col-md-12" style="margin-bottom: 10px">
                 <span>不怎么喜欢教练</span>
                 <span style="float: right">很喜欢教练</span>
             </div>
-            <input type="range" value="10" max="10" min="0" step="2" style="background-color: #e51c23"/>
+            <input type="range" value="10" max="10" min="0" step="2" ng-model="coach" style="background-color: #e51c23"/>
 
-            <button class="btn btn-success col-xs-12 col-sm-12 col-md-12" style="border:none;background: #50db39;margin-top: 15px">提交</button>
+            <button class="btn btn-success col-xs-12 col-sm-12 col-md-12" ng-click="sureEvaluate(service,speciality,coach)"
+                    style="border:none;background: #50db39;margin-top: 15px">
+                提交
+            </button>
             <div ng-if="status==false" class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;color: #e51c23;background: #fce1e1;border-radius: 10px;font-size: 10px;padding: 5px;margin-left: 15px;margin-top: 15px">
                 <span ng-click="badEvalute()">我要差评</span>
             </div>
         </div>
         <div ng-if="status==true">
-            <div class="col-xs-12 col-sm-12 col-md-12" style="border: 1px solid #e5e5e5;height: 100px;padding: 15px;overflow: auto;" contenteditable="true">
-            </div>
+            <textarea ng-model="badEvaluate" class="col-xs-12 col-sm-12 col-md-12"
+                 style="border: 1px solid #e5e5e5;height: 100px;padding: 15px;overflow: auto;"/>
             <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 20px;padding: 0">
-                <button class="btn btn-success col-xs-6 col-sm-6 col-md-6" style="border:none;background: #50db39">提交</button>
+                <button class="btn btn-success col-xs-6 col-sm-6 col-md-6" ng-click="sureBadEvaluate(badEvaluate)" style="border:none;background: #50db39">提交</button>
                 <button class="btn btn-success col-xs-6 col-sm-6 col-md-6" ng-click="cancelBadEvaluate()" style="border:none;background: #f56158">取消</button>
             </div>
         </div>
