@@ -1,5 +1,5 @@
 <div class="nav">
-    <h5 ui-sref="historylog({courseId:coachadvice.courseId})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
+    <h5 ui-sref="historylog({courseId:coachadvice.courseScheduling.course.id})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
     ></span>返回</h5>
 </div>
 <div style="background-color: #f8f8f8;height: 5px;"></div>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-11 col-sm-11 col-xs-11" style="margin:0px;padding: 0px 10px 0px 0px ;">
                 <h4 style="color:#f56158; ">饮食建议：</h4>
-                <p><h5 style="line-height: 20px">{{coachadvice.eatInformation}}</h5></p>
+                <p><h5 style="line-height: 20px">{{coachadvice.coachAdvice.eatInformation}}</h5></p>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-11 col-sm-11 col-xs-11" style="margin:0px;padding: 0px 10px 0px 0px ;">
                 <h4 style="color:#33cc33; ">健身建议：</h4>
-                <p><h5 style="line-height: 20px">{{coachadvice.fitInformation}}</h5></p>
+                <p><h5 style="line-height: 20px">{{coachadvice.coachAdvice.fitInformation}}</h5></p>
             </div>
         </div>
     </div>
