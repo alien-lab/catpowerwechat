@@ -50,7 +50,7 @@
                             <span style="color: #a1a1a1">剩余课时：</span>
                             <span style="color: red">{{all.remainClass}}</span>
                         </h6>
-                        <button ng-if="all.remainClass!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
+                        <button ng-if="all.signInCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
@@ -82,7 +82,7 @@
                             <span style="color: #a1a1a1">剩余课时：</span>
                             <span style="color: red">{{start.remainClass}}</span>
                         </h6>
-                        <button ng-if="start.remainClass!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
+                        <button ng-if="start.signInCount!=0" class="btn btn-success" style="border:none;background: #50db39" ui-sref="stuappointment">
                             <span class="glyphicon glyphicon-plus"></span>
                             <span>预约</span>
                         </button>
