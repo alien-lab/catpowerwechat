@@ -14,9 +14,9 @@
             <div class="col-xs-12 col-sm-12 col-md-12" style="background-color: #f8f8f8;">
                 <div class="col-xs-12 col-sm-12 col-md-12" style="overflow:auto;padding-left: 0;padding-right:0;">
                     <div style="margin-top: 15px;margin-bottom: 30px;padding-bottom:45px;overflow-x: auto; position: relative; ">
-                        <nobr ng-repeat="course in myCourses">
-                            <img title="{{course.courseName}}" ng-click="getCourse(course.id)" class="img-rounded" ng-src="{{course.coursePicture}}" style="width: 107px;height:83px; "/>
-                            <span style="position: absolute;font-size: 89%;margin-top: 83px;margin-left: -105px;">{{course.courseName}}</span>
+                        <nobr ng-repeat="course in appointmentCourseList">
+                            <img ng-repeat="cur in course.courses" title="{{cur.courseThumbnail}}" ng-click="getCourse(course.id)" class="img" ng-src="{{cur.courseThumbnail}}" style="width: 107px;height:83px;margin-left: 6px;border: 1px solid red; "/>
+                            <span style="position: absolute;font-size: 89%;margin-top: 83px;margin-left: -105px;">{{cur.courseName}}</span>
                         </nobr>
                     </div>
                 </div>
@@ -51,8 +51,8 @@
         </div>
         <!--底部按钮-->
         <div class="col-xs-12 col-sm-12 col-md-12" style="bottom: 0;padding: 0;margin-top: 30px;">
-            <button class="btn col-xs-6 col-sm-6 col-md-6" style="background-color: #50db39;color: #ffffff">确认</button>
-            <button class="btn col-xs-6 col-sm-6 col-md-6" style="background-color: #f56158;color: #ffffff" ui-sref="stuindex">取消</button>
+            <button class="btn col-xs-6 col-sm-6 col-md-6" style="background-color: #50db39;color: #ffffff;padding: 12px;font-size: 120%;">确认</button>
+            <button class="btn col-xs-6 col-sm-6 col-md-6" style="background-color: #f56158;color: #ffffff;padding: 12px;font-size: 120%;" ui-sref="stuindex">取消</button>
         </div>
     </div>
 </div>
