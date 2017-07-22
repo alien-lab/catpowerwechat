@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12"
+             style="padding: 0px;background-color: #f8f8f8;margin-bottom: 10px">
+            <h4 style="margin-left: 10px">学员健身反馈</h4>
+        </div>
+        <div class="form-group" style="padding: 5px 20px 0px 20px">
+            <label class="control-label" style="color: #f56158">饮食建议：</label>
+            <textarea ng-model="foodAdvice" class="form-control" style="line-height: 40px" placeholder=""></textarea>
+        </div>
+        <div class="form-group" style="padding: 5px 20px 0px 20px">
+            <label class="control-label" style="color: #33cc33">健身建议：</label>
+            <textarea ng-model="exerciseAdvice" class="form-control" style="line-height: 40px" placeholder=""></textarea>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 20px;padding: 0px 20px 0px 20px">
+            <button class="btn btn-success col-xs-12 col-sm-12 col-md-12" ng-click="submit(foodAdvice,exerciseAdvice)" style="border:none;background: #50db39">提交</button>
+        </div>
+    </div>
+</div>
