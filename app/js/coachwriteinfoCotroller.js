@@ -6,6 +6,7 @@
     var app = angular.module("alienlab");
     app.controller("coachwriteinfoController",["$scope","coachwriteinfoService",function ($scope,coachwriteinfoService) {
         $scope.submit=function (foodAdvice,exerciseAdvice) {
+            console.log(foodAdvice,exerciseAdvice)
             var coachAdvice={
               "foodAdvice":foodAdvice,
               "exerciseAdvice":exerciseAdvice
