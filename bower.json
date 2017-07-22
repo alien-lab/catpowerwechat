@@ -20,6 +20,8 @@
     "angular-ui-router": "^1.0.5",
     "jquery": "^3.2.1",
     "angular-cookies": "^1.6.4",
-    "angular-echarts": "^1.0.2"
+    "angular-echarts": "^1.0.2",
+    "angular-bootstrap": "^2.5.0",
+    "bootstrap-ui-datetime-picker": "^2.6.0"
   }
 }

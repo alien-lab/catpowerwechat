@@ -2,7 +2,21 @@
     li{
         list-style-type: none;
     }
+    .full button span {
+        background-color: limegreen;
+        border-radius: 32px;
+        color: black;
+    }
+    .partially button span {
+        background-color: orange;
+        border-radius: 32px;
+        color: black;
+    }
+
+
+    .week{border: 1px solid #e5e5e5;width:120px;height: 80px;float: left;text-align: center;font-size:80%;margin-left: 10px; margin-top: 15px;}
 </style>
+<!--
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 4%;margin-bottom: 10px">
@@ -51,6 +65,190 @@
                     {{learnInfo.courseName}}
                 </div>
             </div>
+
+        </div>
+    </div>
+</div>-->
+<div class="container">
+    <div class="row">
+        <!--教练头像-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: #e5e5e5;">
+            <span>教练主页</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin: 15px auto;">
+            <div class="media">
+                <div class="media-left">
+                    <div style="width: 76px;height: 76px;border: 1px solid #e5e5e5;border-radius: 38px;background: url('http://mpic.tiankong.com/bd9/500/bd95005bdb4a2ce39437bdde5fa213ad/640.jpg@360h');background-size: cover;"></div>
+                </div>
+                <div class="media-body">
+                    <p><span style="float: right;margin-top: 27px;" class="badge">6</span></p>
+                    <h4 class="media-heading" style="margin-top: 40px;">小乐爷</h4>
+                </div>
+            </div>
+        </div>
+        <!--时间查询-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: #e5e5e5;">
+            <span>查看</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+            <div>
+                <pre>Selected date is: <em>{{dt | date:'fullDate' }}</em></pre>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="input-group">
+                            <input ng-show="false" type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--本周7天的预约情况-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: #e5e5e5;">
+            <span>本周</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: auto;padding: 0;">
+            <div style="width:920px;height:110px;">
+                <div class="week" ng-repeat="weekDay in weeks">
+                    <p>{{weekDay.week}}</p>
+                    <p>预约数与排课</p>
+                    <p>签到数与为评数</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background: #ffffff;z-index: 999;margin-top: -15px;height:15px;"></div>
+        <!--&lt;!&ndash;排课情况&ndash;&gt;
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: #e5e5e5;">
+            <span>排课情况</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-right: 0;line-height: 2;padding-bottom: 10px;">
+            <p>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding-right: 0;">瑜伽</div>
+                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="padding: 0;">上课时间：2017/07/21 08:30</div>
+            </p>
+            <p>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding-right: 0;">普拉提</div>
+                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="padding: 0;">上课时间：2017/07/21 17:30</div>
+            </p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: #e5e5e5;">
+            <span>预约消息</span>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                <div class="media">
+                    <div class="media-left">
+                        <div style="width: 60px;height: 60px;border: 1px solid #e5e5e5;border-radius: 30px;background: url('http://mpic.tiankong.com/bd9/500/bd95005bdb4a2ce39437bdde5fa213ad/640.jpg@360h');background-size: cover;"></div>
+                    </div>
+                    <div class="media-body">
+                        <p><span style="float: right;margin-top: 27px;" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></p>
+                        <p class="media-heading" style="margin-top: 20px;">小乐爷</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                <div class="media">
+                    <div class="media-left">
+                        <div style="width: 60px;height: 60px;border: 1px solid #e5e5e5;border-radius: 30px;background: url('http://mpic.tiankong.com/bd9/500/bd95005bdb4a2ce39437bdde5fa213ad/640.jpg@360h');background-size: cover;"></div>
+                    </div>
+                    <div class="media-body">
+                        <p><span style="float: right;margin-top: 27px;" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></p>
+                        <p class="media-heading" style="margin-top: 20px;">小乐爷</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                <div class="media">
+                    <div class="media-left">
+                        <div style="width: 60px;height: 60px;border: 1px solid #e5e5e5;border-radius: 30px;background: url('http://mpic.tiankong.com/bd9/500/bd95005bdb4a2ce39437bdde5fa213ad/640.jpg@360h');background-size: cover;"></div>
+                    </div>
+                    <div class="media-body">
+                        <p><span style="float: right;margin-top: 27px;" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></p>
+                        <p class="media-heading" style="margin-top: 20px;">小乐爷</p>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0;">
+            <uib-accordion close-others="oneAtATime">
+                <!--排课情况-->
+                <div uib-accordion-group class="panel panel-warning" is-open="status.open" style="border-radius: 0px;">
+                    <uib-accordion-heading>
+                        <span style="font-size: 80%">排课情况</span>
+                        <span class="label label-info" style="padding-top:5px;margin-left: 10px;">{{scheCourselength}}</span>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </uib-accordion-heading>
+                    <div ng-repeat="sche in scheCourse">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding-right: 0;margin-top: 15px;">{{sche.courseName}}</div>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="padding: 0;margin-top: 15px;">上课时间：{{sche.scheTime}}</div>
+                    </div>
+                </div>
+                <!--预约学员数-->
+                <div uib-accordion-group class="panel panel-warning" is-open="status.openAppointment" style="margin-top: 20px;">
+                    <uib-accordion-heading>
+                        <span style="font-size: 80%">预约人数</span>
+                        <span class="label label-info" style="padding-top:5px;margin-left: 10px;">{{appointmentLearnerLength}}</span>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openAppointment, 'glyphicon-chevron-right': !status.openAppointment}"></i>
+                    </uib-accordion-heading>
+                    <div style="margin-top: -15px;">
+                        <div ng-repeat="learner in appointmentLearners" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div style="width: 60px;height: 60px;border: 1px solid #e5e5e5;border-radius: 30px;background: url('{{learner.headImg}}');background-size: cover;"></div>
+                                </div>
+                                <div class="media-body">
+                                    <p class="media-heading" style="margin-top: 20px;">{{learner.learnerName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--预约消息-->
+                <div uib-accordion-group class="panel panel-warning" is-open="status.openAppointmentInfo" style="margin-top: 20px;">
+                    <uib-accordion-heading>
+                        <span style="font-size: 80%">预约消息</span>
+                        <span class="label label-info" style="padding-top:5px;margin-left: 10px;">1</span>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openAppointmentInfo, 'glyphicon-chevron-right': !status.openAppointmentInfo}"></i>
+                    </uib-accordion-heading>
+                    <div style="margin-top: -15px;">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                            <!--<div class="media">
+                                <div class="media-left">
+                                    <div style="width: 60px;height: 60px;border: 1px solid #e5e5e5;border-radius: 30px;background: url('http://v1.qzone.cc/avatar/201505/20/22/52/555c9f9b680ce444.jpg%21200x200.jpg');background-size: cover;"></div>
+                                </div>
+                                <div class="media-body">
+                                    <p class="media-heading" style="margin-top: 20px;">学员4</p>
+                                </div>
+                            </div>-->
+                            <p>学员姓名</p>
+                            <p>预约课程</p>
+                            <p>预约时间</p>
+                            <button class="btn btn-success btn-sm">同意</button>
+                            <button class="btn btn-danger btn-sm">拒绝</button>
+                        </div>
+                    </div>
+                </div>
+                <!--评价消息-->
+                <div uib-accordion-group class="panel panel-warning" is-open="status.openStuComment" style="margin-top: 20px;">
+                    <uib-accordion-heading>
+                        <span style="font-size: 80%">评价消息</span>
+                        <span class="label label-warning" style="padding-top:5px;margin-left: 10px;">1</span>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.openStuComment, 'glyphicon-chevron-right': !status.openStuComment}"></i>
+                    </uib-accordion-heading>
+                    <div style="margin-top: -15px;">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-bottom: 1px solid #e5e5e5;padding: 15px 15px;">
+                            <p>已评学员</p>
+                            <p>未评学员</p>
+                        </div>
+                    </div>
+                </div>
+            </uib-accordion>
+        </div>
+        <!--空白部分-->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
 
         </div>
     </div>

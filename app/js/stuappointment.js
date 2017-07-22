@@ -4,11 +4,11 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer",function($scope,appointmentTimeServer,myCoursesServer){
+    app.controller("stuappointmentController",["$scope","appointmentTimeServer","stuAppointmentService",function($scope,appointmentTimeServer,stuAppointmentService){
 
-        //加载我的课程
+        /*//加载我的课程
         $scope.myCourses = myCoursesServer.loadMyCourses();
-        console.log($scope.myCourses);
+        console.log($scope.myCourses);*/
         //选择课程
         $scope.getCourse = function (id) {
             angular.forEach($scope.myCourses,function (item) {
@@ -32,8 +32,37 @@
             });
         }
 
+
+        //获取预约课程
+        stuAppointmentService.loadMycourse(2,function (data) {
+            $scope.appointmentCourseList = data;
+            console.log($scope.appointmentCourseList)
+        });
+
+
     }]);
-    app.service("myCoursesServer",[function () {
+    app.service('stuAppointmentService',['$http','domain',function ($http,domain) {
+        //获取预约课程
+        this.loadMycourse = function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/buy-courses/mycourse/'+learnerId
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data);
+                }
+            });
+            /*$http({
+                method:"GET",
+                url:domain+'api/buy-course/allCoach/'+learnerId
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data);
+                }
+            });*/
+        }
+    }]);
+    /*app.service("myCoursesServer",[function () {
         this.loadMyCourses = function () {
             var myCourses = [{
                 id:1,
@@ -70,7 +99,7 @@
             }];
             return myCourses;
         }
-    }]);
+    }]);*/
     app.service("appointmentTimeServer",[function () {
         this.loadCoursesTime = function () {
             var coursesTime = [{
