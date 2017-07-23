@@ -4,101 +4,129 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer",function($scope,appointmentTimeServer,myCoursesServer){
+    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter",function($scope,appointmentTimeServer,myCoursesServer,$filter){
+        $scope.myCourses=[];
+        $scope.currentCourse=null;
+        $scope.appointmentDate=null;
+        $scope.appointmentMemo="";
+        $scope.appointmentTimeList=null;
 
-        //加载我的课程
-        $scope.myCourses = myCoursesServer.loadMyCourses();
-        console.log($scope.myCourses);
-        //选择课程
-        $scope.getCourse = function (id) {
-            angular.forEach($scope.myCourses,function (item) {
-                if(item.id == id){
-                    $scope.appointmentCourse =item.courseName;
-                    $scope.showCourse = true;
-                }
-            });
+        myCoursesServer.loadMyCourses(2,function (data) {
+            console.log("loadcourses>>",data);
+            $scope.myCourses=data.startCourse;
+            //默认选中第一课
+            if($scope.myCourses.length>0){
+                $scope.currentCourse=$scope.myCourses[0];
+            }
+        });
 
-        };
-        //预约时间
-        $scope.appointmentTimeList = appointmentTimeServer.loadCoursesTime();
-        $scope.chooseAppointmentTime = function (id) {
-            angular.forEach($scope.appointmentTimeList,function (item,key) {
-                if(item.id == id){
-                    item.status = true;
+        $scope.clickCourse=function(course){
+            if($scope.currentCourse!=null && course.id!=$scope.currentCourse.id){
+                $scope.currentCourse=course;
+            }else{
+                if($scope.currentCourse==null){
+                    $scope.currentCourse=course;
                 }
-                if(item.id != id){
-                    item.status = false;
-                }
-            });
+            }
         }
 
+        $scope.$watch("currentCourse",function(newValue,oldValue){
+            console.log(newValue,oldValue);
+            if($scope.currentCourse==null)return;
+             //获取预约时间
+             appointmentTimeServer.loadCoursesTime($scope.currentCourse.coach.id,function (data) {
+                 $scope.appointmentTimeList = data;
+             })
+        },true);
+
+         $scope.chooseAppointmentTime = function (date) {
+             angular.forEach($scope.appointmentTimeList,function (item,key) {
+                 if(item.id == date.id){
+                     item.status = true;
+                     $scope.appointmentDate= $filter('date')(date.workDate, 'yyyy-MM-dd');
+                 }
+                 if(item.id != date.id){
+                     item.status = false;
+                 }
+             });
+         }
+
+         $scope.post=function(){
+             var param={
+                  buyCourseId:$scope.currentCourse.id,
+                  appointmentDate:$scope.appointmentDate,
+                  appointmentMemo:$scope.appointmentMemo
+
+              }
+             myCoursesServer.postCourseAppoint(param,function(result,flag){
+                 if(!flag){
+                     //出现异常给提示
+                     alert("错误");
+                 }
+                 //正确返回的逻辑
+
+             });
+
+         }
+
     }]);
-    app.service("myCoursesServer",[function () {
-        this.loadMyCourses = function () {
-            var myCourses = [{
-                id:1,
-                courseName:'基础课',
-                coursePicture:'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2847892609,1708440173&fm=26&gp=0.jpg'
-            },{
-                id:2,
-                courseName:'高级健美训练技术',
-                coursePicture:'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3474014184,3118816534&fm=26&gp=0.jpg'
-            },{
-                id:3,
-                courseName:'功能性训练课程',
-                coursePicture:'http://www.chuangtijianshen.com/data/upload/20170110/5874ac0771f8e.jpg'
-            },{
-                id:4,
-                courseName:'普拉提',
-                coursePicture:'http://mpic.tiankong.com/cd2/86b/cd286b8f9867a1afdcf64451706bc01c/640.jpg@360h'
-            },{
-                id:5,
-                courseName:'健美健身',
-                coursePicture:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=909595617,895328992&fm=26&gp=0.jpg'
-            },{
-                id:6,
-                courseName:'动感单车',
-                coursePicture:'http://preview.quanjing.com/bjisub003/bji02420070.jpg'
-            },{
-                id:7,
-                courseName:'搏击操',
-                coursePicture:'http://mpic.tiankong.com/a3b/691/a3b691d6e8764b43a7b7ecc6537cb816/640.jpg@360h'
-            },{
-                id:8,
-                courseName:'形体',
-                coursePicture:'http://mpic.tiankong.com/ade/07d/ade07d1acb41a12e6c8454195248d547/640.jpg@360h'
-            }];
-            return myCourses;
+    app.service("myCoursesServer",["$http","domain",function ($http,domain) {
+        //根据学院ID查询对应消息
+        this.loadMyCourses = function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/buy-courses/mycourse/'+learnerId
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data);
+                }
+            })
+        }
+        //查询对应课程名称
+        this.loadCourseName = function (id,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/courses/'+id
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data);
+                }
+            })
+        }
+        //预约教练信息
+        this.postCourseAppoint = function (param,callback) {
+            $http({
+                method:'POST',
+                url:domain+'api/learner-appointment',
+                data:param
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data,true);
+                    swal({
+                        title:"预约成功",
+                        type:"success",
+                        timer:1000,
+                        showConfirmButton:false
+                    });
+                    window.setTimeout("location.href='/#!/appointrecord'",1200);
+                }
+            },function(data){
+                if (callback){
+                    callback(data.data,false);
+                }
+            })
         }
     }]);
-    app.service("appointmentTimeServer",[function () {
-        this.loadCoursesTime = function () {
-            var coursesTime = [{
-                id:1,
-                appointmentTime:'2017年07月05日 12:02',
-                status:false
-            },{
-                id:2,
-                appointmentTime:'2017年07月06日 12:02',
-                status:false
-            },{
-                id:3,
-                appointmentTime:'2017年07月07日 12:02',
-                status:false
-            },{
-                id:4,
-                appointmentTime:'2017年07月08日 12:02',
-                status:false
-            },{
-                id:5,
-                appointmentTime:'2017年07月09日 12:02',
-                status:false
-            },{
-                id:6,
-                appointmentTime:'2017年07月010日 12:02',
-                status:''
-            }];
-            return coursesTime;
+    app.service("appointmentTimeServer",["$http","domain",function ($http,domain) {
+        this.loadCoursesTime = function (coachId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/courseworksche/info/'+coachId
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data);
+                }
+            })
         }
     }]);
 
