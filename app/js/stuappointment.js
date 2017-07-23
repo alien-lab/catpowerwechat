@@ -108,7 +108,7 @@
                         timer:1000,
                         showConfirmButton:false
                     });
-                    window.setTimeout("location.href='http://localhost:8080/#!/appointrecord'",1200);
+                    window.setTimeout("location.href='/#!/appointrecord'",1200);
                 }
             },function(data){
                 if (callback){
