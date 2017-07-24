@@ -7,9 +7,20 @@
     app.controller("appointrecordController",["$scope","appointrecordService",function($scope,appointrecordService){
         $scope.appointRecord = appointrecordService.loadAppointRecord(2,function (data) {
             $scope.appointRecord=data;
-            console.log($scope.appointRecord)
         });
-        console.log($scope.appointRecord)
+
+        //取消预约
+        $scope.cancelAppoint = function (param) {
+            if (param != null){
+                appointrecordService.deleteAppoint(param,function (data,flag) {
+                    if(!flag){
+                        //出现异常给提示
+                       // alert("错误");
+                    }
+                })
+            }
+        }
+
     }]);
 
     app.service("appointrecordService",["$http","domain",function ($http,domain) {
@@ -22,81 +33,32 @@
                     callback(data.data);
                 }
             })
+
+
+
+            this.deleteAppoint =function (param,callback) {
+                $http({
+                    method:'DELETE',
+                    url:domain+'api/learner-appointment/'+param,
+                }).then(function (data) {
+                    if (callback){
+                        callback(data.data,true);
+                        swal({
+                            title:"成功取消预约",
+                            type:"success",
+                            timer:2000,
+                            showConfirmButton:false
+                        });
+                        setTimeout('window.location.reload()', 1000);
+                        //window.setTimeout("location.href='/#!/appointrecord'",1200);
+                    }
+                },function(data){
+                    if (callback){
+                        callback(data.data,false);
+                    }
+                })
+            }
         }
-            /*var appointRecord =
-                {
-                    "all":[
-                        {
-                            "courseName":"有氧健身操",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"杨教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"正在预约"
-                        },
-                        {
-                            "courseName":"瑜伽",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"欧阳教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"接受"
-                        },
-                        {
-                            "courseName":"精选篮球",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"马教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"接受"
-                        }
-                    ],
-                    "start":[
-                        {
-                            "courseName":"有氧健身操",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"杨教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"正在预约"
-                        },
-                        {
-                            "courseName":"瑜伽",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"欧阳教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"正在预约"
-                        },
-                        {
-                            "courseName":"精选篮球",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"马教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"正在预约"
-                        }
-                    ],
-                    "finish":[
-                        {
-                            "courseName":"有氧健身操",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"杨教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"接受"
-                        },
-                        {
-                            "courseName":"瑜伽",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"欧阳教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"接受"
-                        },
-                        {
-                            "courseName":"精选篮球",
-                            "courseLogo":"../img/coach1.jpg",
-                            "coachName":"马教练",
-                            "appointTime":"2017-6-16 13:40",
-                            "appointStatus":"接受"
-                        }
-                    ]
-                }
-            return appointRecord;
-        }*/
     }])
 
 })();

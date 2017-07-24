@@ -44,7 +44,7 @@
                           <span style="color: #a1a1a1">预约状态：</span>
                           <span style="color: red">{{all.appointmentResult}}</span>
                       </h6>
-                      <button ng-if="all.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
+                      <button ng-if="all.appointmentResult=='预约中'" ng-click="cancelAppoint(all.id)" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
                             <span style="color: #a1a1a1">预约状态：</span>
                             <span style="color: red">{{start.appointmentResult}}</span>
                         </h6>
-                        <button ng-if="start.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
+                        <button ng-if="start.appointmentResult=='预约中'" ng-click="cancelAppoint(start.id)" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,6 @@
                             <span style="color: #a1a1a1">预约状态：</span>
                             <span style="color: red">{{finish.appointmentResult}}</span>
                         </h6>
-                        <button ng-if="finish.appointmentResult=='预约中'" class="btn btn-default" style="color: #f56158;border: 1px solid #f56158;background: #ffffff;">取消预约</button>
                     </div>
                 </div>
             </div>
