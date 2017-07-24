@@ -43,7 +43,8 @@
             <div class="col-xs-12 col-sm-12 col-md-12" style="background-color: #f8f8f8;">
                 <div class="list-group" style="padding-top: 15px;">
                     <button type="button" class="list-group-item" ng-repeat="time in appointmentTimeList" ng-click="chooseAppointmentTime(time)">
-                        <span id="workDate">{{time.workDate | date:'yyyy年MM月dd日'}}</span>
+                        <span ng-if="time.workDate">{{time.workDate | date:'yyyy年MM月dd日'}}</span>
+                        <span ng-if="!time.workDate">该教练今天没有排班哦！</span>
                         <span class="badge" style="background: green;" ng-if="time.status">预约</span>
                     </button>
                 </div>
@@ -52,7 +53,6 @@
                 <h5>预约留言</h5>
             </div>
             <textarea ng-model="appointmentMemo" class="col-xs-12 col-sm-12 col-md-12" style="background-color: #f8f8f8;border: 1px solid #e5e5e5;height: 100px;padding: 15px;overflow: auto;" contenteditable="true">
-
             </textarea>
         </div>
         <!--底部按钮-->

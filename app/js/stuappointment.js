@@ -61,13 +61,12 @@
              myCoursesServer.postCourseAppoint(param,function(result,flag){
                  if(!flag){
                      //出现异常给提示
-                     alert("错误");
+                     //alert("错误");
                  }
                  //正确返回的逻辑
-
              });
-
          }
+         
 
     }]);
     app.service("myCoursesServer",["$http","domain",function ($http,domain) {
@@ -113,9 +112,15 @@
             },function(data){
                 if (callback){
                     callback(data.data,false);
+                    swal(
+                        "oh my god!",
+                        "您已经预约此课程!",
+                        "error");
+                    window.setTimeout('window.location.reload()',1000);
                 }
             })
         }
+
     }]);
     app.service("appointmentTimeServer",["$http","domain",function ($http,domain) {
         this.loadCoursesTime = function (coachId,callback) {
