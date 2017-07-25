@@ -4,8 +4,9 @@
 (function () {
     'use strict';
     var app = angular.module("alienlab");
-    app.controller("stucourseController", ["$scope", "stuCourseService", function ($scope, stuCourseService) {
-        stuCourseService.loadStuCourse(2, function (data) {
+    app.controller("stucourseController", ["$scope", "stuCourseService", "$rootScope", function ($scope, stuCourseService,$rootScope) {
+        var learnerId = $rootScope.learnerInfo.learner.id;
+        stuCourseService.loadStuCourse(learnerId, function (data) {
             $scope.stuCourse = data;
         })
     }]);

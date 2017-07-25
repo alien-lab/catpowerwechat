@@ -4,11 +4,12 @@
     app.controller("stuindexController",["$scope","$rootScope","stuindexService",function($scope,$rootScope,stuindexService){
         // $scope.loadAll = true;
         $scope.$watch("$root.openid",function(newvalue,oldvalue){
-            console.log("openid changed:",newvalue);
+           // console.log("openid changed:",newvalue);
             if(newvalue&&newvalue!=""){
                 stuindexService.loadStuIndex($rootScope.openid,function (data) {
                     $scope.learnerIndex=data;
-                    console.log($scope.learnerIndex);
+                    $rootScope.learnerInfo = data;
+
                 });
             }
         },true);
