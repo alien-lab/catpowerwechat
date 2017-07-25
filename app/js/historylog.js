@@ -19,7 +19,7 @@
         }
         loadLearner();
 
-        $scope.watch("$root.openid",function (newValue) {
+        $scope.$watch("$root.openid",function (newValue) {
             if (!newValue)return;
             if (!$scope.learnerInfo){
                 stuindexService.loadStuIndex($rootScope.openid,function (data) {
