@@ -4,13 +4,31 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("historylogController",["$scope","historylogservice","$stateParams","$rootScope",function($scope,historylogservice,$stateParams,$rootScope){
-
+    app.controller("historylogController",["$scope","historylogservice","$stateParams","$rootScope","stuindexService",
+        function($scope,historylogservice,$stateParams,$rootScope,stuindexService){
         var courseId = $stateParams.courseId;
-        var learnerId = $rootScope.learnerInfo.learner.id;
-        historylogservice.loadMyHistoryLog(learnerId,courseId,function (data) {
-            $scope.historyLog = data;
-        })
+        function loadLearner(){
+            if($rootScope.learnerInfo!=null && courseId!=null){
+                var learnerId = $rootScope.learnerInfo.learner.id;
+                if(learnerId){
+                    historylogservice.loadMyHistoryLog(learnerId,courseId,function (data) {
+                        $scope.historyLog = data;
+                    })
+                }
+            }
+        }
+        loadLearner();
+
+        $scope.watch("$root.openid",function (newValue) {
+            if (!newValue)return;
+            if (!$scope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+        },true)
 
     }]);
 
