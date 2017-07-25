@@ -5,26 +5,20 @@
     'use strict'
     var app=angular.module("alienlab");
     app.controller("keepfitController",["$scope","$stateParams","keepfitService",function ($scope,$stateParams,keepfitService) {
-        $scope.fitLogs=keepfitService.loadfitlog();
-        console.log($scope.fitLogs);
+        $scope.fitLogs=keepfitService.loadfitlog(2,function (data) {
+            $scope.fitLogs = data.data;
+        });
     }]);
-    app.service("keepfitService",[function () {
-        this.loadfitlog = function () {
-            var fitlog = {
-                "bodytest":{
-                    "height":"170",
-                    "weight":"58",
-                    "bodyfat":"15.8",
-                    "fattype":"正常",
-                    "protein":"100",
-                    "water":"36.6",
-                    "salt":"4.1",
-                    "muscle":"47.1",
-                    "bodymass":"24.6",
-                    "bodyfatper":"22.3"
+    app.service("keepfitService",["$http","domain",function ($http,domain) {
+        this.loadfitlog = function (learnerId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-infos/fitlog/'+learnerId
+            }).then(function (data) {
+                if (callback) {
+                    callback(data.data);
                 }
-            }
-            return fitlog;
+            })
         }
     }])
 })()
