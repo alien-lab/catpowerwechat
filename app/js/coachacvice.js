@@ -4,10 +4,11 @@
 (function () {
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("coachadviceController",["$scope","$stateParams","coachadviceService",function($scope,$stateParams,coachadviceService){
+    app.controller("coachadviceController",["$scope","$stateParams","coachadviceService","$rootScope",function($scope,$stateParams,coachadviceService,$rootScope){
         $scope.advice = null;
         var courseSchedulingId = $stateParams.courseScheId;
-        coachadviceService.loadCoachAdvice(2,courseSchedulingId,function (data) {
+        var learnerId = $rootScope.learnerInfo.learner.id;
+        coachadviceService.loadCoachAdvice(learnerId,courseSchedulingId,function (data) {
             $scope.coachadvice = data;
             var advicestr = data.coachAdvice;
             $scope.advice=JSON.parse(advicestr);
