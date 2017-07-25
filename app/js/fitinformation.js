@@ -4,11 +4,28 @@
 (function () {
     'use strict'
     var app=angular.module("alienlab");
-    app.controller("fitinformationController",["$scope","fitnessService",function ($scope,fitnessService) {
-       fitnessService.loadMyFitLog(2,function (data) {
-           $scope.fitLogs= data;
-       });
-        //console.log($scope.fitLogs);
+    app.controller("fitinformationController",["$scope","fitnessService","stuindexService","$rootScope",function ($scope,fitnessService,stuindexService,$rootScope) {
+        function loadLearner(){
+            if($rootScope.learnerInfo){
+                var learnerId = $rootScope.learnerInfo.learner.id;
+                if(learnerId){
+                    fitnessService.loadMyFitLog(learnerId,function (data) {
+                        $scope.fitLogs= data;
+                    });
+                }
+            }
+        }
+        loadLearner();
+        $scope.watch("$root.openid",function (newValue) {
+            if (!newValue)return;
+            if (!$scope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+        },true);
 
     }]);
     app.service("fitnessService",["$http","domain",function ($http,domain) {

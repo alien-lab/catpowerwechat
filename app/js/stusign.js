@@ -4,13 +4,30 @@
 (function () {
     'use strict';
     var app = angular.module("alienlab");
-    app.controller("stusignController", ["$scope", "stusignService", function ($scope, stusignService) {
-        //加载我的课程
-        stusignService.loadMyCourse(2,function (data) {
-             $scope.signLog = data;
-        });
-        console.log("消费记录" + $scope.signLog);
-
+    app.controller("stusignController", ["$scope", "stusignService", "stuindexService",
+        function ($scope, stusignService,stuindexService) {
+        function loadLearner() {
+            if($rootScope.learnerInfo){
+                var learnerId = $rootScope.learnerInfo.learner.id;
+                if(learnerId!=null) {
+                    //加载我的课程
+                    stusignService.loadMyCourse(learnerId,function (data) {
+                        $scope.signLog = data;
+                    });
+                }
+            }
+        }
+        loadLearner();
+        $scope.watch("$root.openid",function (newValue) {
+            if (!newValue)return;
+            if (!$scope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+        },true)
     }]);
 
 
