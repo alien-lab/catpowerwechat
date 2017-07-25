@@ -4,11 +4,22 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("appointrecordController",["$scope","appointrecordService","$rootScope",function($scope,appointrecordService,$rootScope){
-        var learnerId = $rootScope.learnerInfo.learner.id;
-        $scope.appointRecord = appointrecordService.loadAppointRecord(learnerId,function (data) {
-            $scope.appointRecord=data;
-        });
+    app.controller("appointrecordController",
+        ["$scope","appointrecordService","$rootScope","stuindexService",
+            function($scope,appointrecordService,$rootScope,stuindexService){
+            function loadLearner(){
+                if($rootScope.learnerInfo){
+                    var learnerId = $rootScope.learnerInfo.learner.id;
+                    if(learnerId){
+                        $scope.appointRecord = appointrecordService.loadAppointRecord(learnerId,function (data) {
+                            $scope.appointRecord=data;
+                        });
+                    }
+                }
+            }
+            loadLearner();
+
+
 
         //取消预约
         $scope.cancelAppoint = function (param) {
@@ -21,6 +32,18 @@
                 })
             }
         }
+
+        $scope.$watch("$root.openid",function(newvalue){
+            if(!newvalue) return;
+            if(!$rootScope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+
+        },true)
 
     }]);
 

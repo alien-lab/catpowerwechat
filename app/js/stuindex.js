@@ -9,7 +9,6 @@
                 stuindexService.loadStuIndex($rootScope.openid,function (data) {
                     $scope.learnerIndex=data;
                     $rootScope.learnerInfo = data;
-
                 });
             }
         },true);

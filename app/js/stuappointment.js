@@ -62,17 +62,19 @@
               }
              myCoursesServer.postCourseAppoint(param,function(result,flag){
                  if(!flag){
-                     swal(
-                         "oh my god!",
-                         "您已经预约此课程!",
-                         "error");
+                     swal({
+                         title:"oh my god!",
+                         text:"您已经预约此课程!",
+                         type:"error",
+                         showConfirmButton:true
+                     });
+                     return;
                  }
                  //正确返回的逻辑
                  swal({
                      title:"预约成功",
                      type:"success",
-                     timer:1000,
-                     showConfirmButton:false
+                     showConfirmButton:true
                  },function() {
                      $state.go('appointrecord', null, { reload: true });
                  });
