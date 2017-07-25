@@ -1,4 +1,3 @@
-/*
 (function(){
     'use strict';
     var app=angular.module("alienlab");
@@ -30,16 +29,14 @@
 
     }]);
 
-})();*/
+})();
 
-/**
- * Created by 橘 on 2017/6/26.
- */
-(function(){
+
+/*(function(){
     'use strict';
     var app=angular.module("alienlab");
     app.controller("stuindexController",["$scope","stuindexService",function($scope,stuindexService){
-        /*console.log("返回的参数："+$rootScope.openid);*/
+        /!*console.log("返回的参数："+$rootScope.openid);*!/
         stuindexService.loadStuIndex("123456",function (data) {
             $scope.learnerIndex=data;
             console.log($scope.learnerIndex)
@@ -60,5 +57,5 @@
 
     }]);
 
-})();
+})();*/
 
