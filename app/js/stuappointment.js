@@ -27,7 +27,7 @@
             }
         }
         loadLearner();
-        $scope.watch("$root.openid",function (newvalue) {
+        $scope.$watch("$root.openid",function (newvalue) {
             if(!newvalue) return;
             if(!$rootScope.learnerInfo){
                 stuindexService.loadStuIndex($rootScope.openid,function (data) {

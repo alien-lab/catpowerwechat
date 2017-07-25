@@ -1,9 +1,12 @@
 <div class="nav">
-    <h5 ui-sref="historylog({courseId:coachadvice.courseScheduling.course.id})"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"
-    ></span>返回</h5>
+    <a href="javascript :;" style="color: #000;" onClick="javascript :history.back(-1);"><h5><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left: 5px;"></span>返回</h5></a>
 </div>
 <div style="background-color: #f8f8f8;height: 5px;"></div>
-<div class="container">
+<div ng-if="!advice" class="container">
+    <h4>这家伙很懒，没有留下建议哦!</h4>
+
+</div>
+<div ng-if="advice" class="container">
     <div class="row" >
         <div class="col-md-12 col-sm-12 col-xs-12"
              style="margin: 5px 0px 0px 0px ;padding: 0px;background-color: #f8f8f8">
