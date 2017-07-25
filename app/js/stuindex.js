@@ -1,7 +1,8 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuindexController",["$scope","$rootScope","stuindexService",function($scope,$rootScope,stuindexService){
+    app.controller("stuindexController",["$scope","$rootScope","stuindexService",
+            function($scope,$rootScope,stuindexService){
         // $scope.loadAll = true;
         $scope.$watch("$root.openid",function(newvalue,oldvalue){
            // console.log("openid changed:",newvalue);
