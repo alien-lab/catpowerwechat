@@ -12,7 +12,6 @@
         $scope.appointmentMemo="";
         $scope.appointmentTimeList=null;
         var learnerId = $rootScope.learnerInfo.learner.id;
-
         myCoursesServer.loadMyCourses(learnerId,function (data) {
 
             $scope.myCourses=data.startCourse;
