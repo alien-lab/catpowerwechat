@@ -6,12 +6,14 @@
     var app=angular.module("alienlab");
     app.controller("coachadviceController",["$scope","$stateParams","coachadviceService",function($scope,$stateParams,coachadviceService){
         console.log($stateParams.courseScheId);
+        $scope.advice = null;
         var courseSchedulingId = $stateParams.courseScheId;
         coachadviceService.loadCoachAdvice(2,courseSchedulingId,function (data) {
-            $scope.coachadvice = data
+            $scope.coachadvice = data;
+            var advicestr = data.coachAdvice;
+            $scope.advice=JSON.parse(advicestr);
         });
-        /*$scope.coachadvice =
-            coachadviceService.loadCoachAdvice();*/
+
     }]);
     app.service("coachadviceService",["$http","domain",function ($http,domain) {
         this.loadCoachAdvice = function (learnerId,courseSchedulingId,callback) {

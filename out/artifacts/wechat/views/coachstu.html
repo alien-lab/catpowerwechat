@@ -5,18 +5,31 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12" style="background: #f8f8f8;height: 10px;width: 100%">
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%;color: #f56158">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%;color: #a1a1a1">
             <h5>我的学员</h5>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12" style="background: #f8f8f8;height: 10px;width: 100%">
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%;margin-top: 10px">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="width: 100%;margin-top: 10px;background: url('http://img3.imgtn.bdimg.com/it/u=3522130781,2111140705&fm=214&gp=0.jpg');background-size: cover">
             <div ng-repeat="coachstu in coachstu">
-                <img ng-src="{{coachstu.learnerHead}}" class="img-circle" style="width: 56px;height: 56px">
-                <h5 style="margin-top: -25px;padding-left: 70px;">{{coachstu.learnerName}}</h5>
+                <img ng-src="{{coachstu.learner.wechatUser.icon}}" class="img-circle" style="width: 64px;height: 64px">
+                <h5 style="margin-top: -60px;padding-left: 80px;color:#f56158">{{coachstu.learner.learneName}}</h5>
+                <h6 style="padding-left: 80px;color: #333">
+                    性别：{{coachstu.learner.learnerSex}}
+                </h6>
+                <h6 style="padding-left: 80px;color: #333">
+                    手机号：{{coachstu.learner.learnerPhone}}
+                </h6>
+                <h6 style="padding-left: 80px;color: #333">
+                    经验值：{{coachstu.learner.experience}}
+                </h6>
+                <h6 style="padding-left: 80px;color: #333">
+                    课程：<span ng-repeat="course in coachstu.courses">{{course.courseName}}</span>
+                </h6>
+
                 <div style="float: right;margin-top: -30px;color: #a1a1a1">
-                    <span>{{coachstu.courseName}}</span>
+                    <!--<span>{{coachstu.courseName}}</span>-->
                     <span class="glyphicon glyphicon-menu-right"></span>
                 </div>
                 <hr/>
