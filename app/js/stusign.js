@@ -11,7 +11,7 @@
                 var learnerId = $rootScope.learnerInfo.learner.id;
                 if(learnerId!=null) {
                     //加载我的课程
-                    stusignService.loadMyCourse(2,function (data) {
+                    stusignService.loadMyCourse(learnerId,function (data) {
                         $scope.signLog = data;
                     });
                 }
