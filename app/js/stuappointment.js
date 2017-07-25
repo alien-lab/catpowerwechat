@@ -4,15 +4,17 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter",function($scope,appointmentTimeServer,myCoursesServer,$filter){
+    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter","$rootScope","$state",
+        function($scope,appointmentTimeServer,myCoursesServer,$filter,$rootScope,$state){
         $scope.myCourses=[];
         $scope.currentCourse=null;
         $scope.appointmentDate=null;
         $scope.appointmentMemo="";
         $scope.appointmentTimeList=null;
+        var learnerId = $rootScope.learnerInfo.learner.id;
 
-        myCoursesServer.loadMyCourses(2,function (data) {
-            console.log("loadcourses>>",data);
+        myCoursesServer.loadMyCourses(learnerId,function (data) {
+
             $scope.myCourses=data.startCourse;
             //默认选中第一课
             if($scope.myCourses.length>0){
@@ -60,16 +62,27 @@
               }
              myCoursesServer.postCourseAppoint(param,function(result,flag){
                  if(!flag){
-                     //出现异常给提示
-                     //alert("错误");
+                     swal(
+                         "oh my god!",
+                         "您已经预约此课程!",
+                         "error");
                  }
                  //正确返回的逻辑
+                 swal({
+                     title:"预约成功",
+                     type:"success",
+                     timer:1000,
+                     showConfirmButton:false
+                 },function() {
+                     $state.go('appointrecord', null, { reload: true });
+                 });
+
              });
          }
          
 
     }]);
-    app.service("myCoursesServer",["$http","domain",function ($http,domain) {
+    app.service("myCoursesServer",["$http","domain","rootpath",function ($http,domain,rootpath) {
         //根据学院ID查询对应消息
         this.loadMyCourses = function (learnerId,callback) {
             $http({
@@ -101,22 +114,11 @@
             }).then(function (data) {
                 if (callback){
                     callback(data.data,true);
-                    swal({
-                        title:"预约成功",
-                        type:"success",
-                        timer:1000,
-                        showConfirmButton:false
-                    });
-                    window.setTimeout("location.href='/#!/appointrecord'",1200);
+
                 }
             },function(data){
                 if (callback){
                     callback(data.data,false);
-                    swal(
-                        "oh my god!",
-                        "您已经预约此课程!",
-                        "error");
-                    window.setTimeout('window.location.reload()',1000);
                 }
             })
         }

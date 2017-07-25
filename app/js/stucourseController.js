@@ -13,7 +13,6 @@
 
     app.service("stuCourseService", ["$http", "domain", function ($http, domain) {
         this.loadStuCourse = function (learnerId, callback) {
-            console.log("hhahahhahahhah" + learnerId);
             $http({
                 method: 'GET',
                 url: domain + 'api/buy-courses/mycourse/' + learnerId

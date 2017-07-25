@@ -4,8 +4,10 @@
 (function () {
     'use strict'
     var app=angular.module("alienlab");
-    app.controller("keepfitController",["$scope","$stateParams","keepfitService",function ($scope,$stateParams,keepfitService) {
-        $scope.fitLogs=keepfitService.loadfitlog(2,function (data) {
+    app.controller("keepfitController",["$scope","$stateParams","keepfitService","$rootScope",function ($scope,$stateParams,keepfitService,$rootScope) {
+        var learnerId = $rootScope.learnerInfo.learner.id;
+
+        $scope.fitLogs=keepfitService.loadfitlog(learnerId,function (data) {
             $scope.fitLogs = data.data;
         });
     }]);

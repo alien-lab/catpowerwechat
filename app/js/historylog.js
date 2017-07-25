@@ -4,13 +4,14 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("historylogController",["$scope","historylogservice","$stateParams",function($scope,historylogservice,$stateParams){
-        console.log($stateParams.courseId);
+    app.controller("historylogController",["$scope","historylogservice","$stateParams","$rootScope",function($scope,historylogservice,$stateParams,$rootScope){
+
         var courseId = $stateParams.courseId;
-        historylogservice.loadMyHistoryLog(2,courseId,function (data) {
+        var learnerId = $rootScope.learnerInfo.learner.id;
+        historylogservice.loadMyHistoryLog(learnerId,courseId,function (data) {
             $scope.historyLog = data;
         })
-        //$scope.historyLog = historylogservice.loadMyHistoryLog();
+
     }]);
 
     app.service("historylogservice",["$http","domain",function ($http,domain) {
@@ -27,21 +28,6 @@
                     callback(data.data);
                 }
             })
-            /*var signHistoryLog = [
-                {
-                    courseScheId:'1',
-                    signTime: '2017-7-4 17:50'
-                }, {
-                    courseScheId:'2',
-                    signTime: '2017-7-4 17:50',
-                }, {
-                    courseScheId:'3',
-                    signTime: '2017-7-4 17:50',
-                }, {
-                    courseScheId:'4',
-                    signTime: '2017-7-4 18:10',
-                }];
-            return signHistoryLog;*/
         }
     }]);
 })();
