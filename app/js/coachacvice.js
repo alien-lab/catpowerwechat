@@ -6,32 +6,12 @@
     var app=angular.module("alienlab");
     app.controller("coachadviceController",["$scope","$stateParams","coachadviceService",function($scope,$stateParams,coachadviceService){
         console.log($stateParams.courseScheId);
-        $scope.advice=null;
-        $scope.foodAdvice=null;
-        $scope.exerciseAdvice=null;
-        $scope.current = null;
+        $scope.advice = null;
         var courseSchedulingId = $stateParams.courseScheId;
         coachadviceService.loadCoachAdvice(2,courseSchedulingId,function (data) {
             $scope.coachadvice = data;
-            $scope.advice = data.coachAdvice;
-            $scope.current= ($scope.advice).replace("=",":");
-            var toStr = JSON.stringify($scope.current);
-            console.log("=========================="+toStr)
-            console.log($scope.current.foodAdvice)
-
-           // console.log("zifushuzu"+arr);
-             /*angular.forEach($scope.current,function (item) {
-                //console.log("hahsdhakkdas"+item);
-                 $scope.foodAdvice= item[1];
-                 console.log("饮食建议"+$scope.foodAdvice)
-             })*/
-            $scope.current = ($scope.current);
-            for(var i = 0 ;i<$scope.current.length;i++){
-              //  console.log("哈哈哈"+($scope.current)[0][0])
-                console.log("哈哈哈"+$scope.current)
-            }
-
-
+            var advicestr = data.coachAdvice;
+            $scope.advice=JSON.parse(advicestr);
         });
 
     }]);
