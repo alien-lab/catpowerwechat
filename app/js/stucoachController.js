@@ -4,11 +4,31 @@
 (function () {
     'use strict';
     var app = angular.module("alienlab");
-    app.controller("stucoachController",["$scope","stucoachService",function ($scope,stucoachService) {
-        stucoachService.loadStuCoach(2,function (data) {
-            $scope.stucoash=data;
-            console.log($scope.stucoash)
-        });
+    app.controller("stucoachController",["$scope","stucoachService","$rootScope","stuindexService",function ($scope,stucoachService,$rootScope,stuindexService) {
+        function loadLearner() {
+            if($rootScope.learnerInfo){
+                var learnerId = $rootScope.learnerInfo.learner.id;
+                if(learnerId!=null) {
+                    stucoachService.loadStuCoach(learnerId, function (data) {
+                        $scope.stucoash = data;
+                        console.log($scope.stucoash)
+                    });
+                }
+            }
+        }
+        loadLearner();
+        $scope.$watch("$root.openid",function(newvalue){
+            if(!newvalue) return;
+            if(!$rootScope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+
+        },true)
+
     }]);
 
     app.service("stucoachService",["$http","domain",function ($http,domain) {

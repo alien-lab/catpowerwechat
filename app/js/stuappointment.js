@@ -4,22 +4,40 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter","$rootScope","$state",
-        function($scope,appointmentTimeServer,myCoursesServer,$filter,$rootScope,$state){
+    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter","$rootScope","$state","stuindexService",
+        function($scope,appointmentTimeServer,myCoursesServer,$filter,$rootScope,$state,stuindexService){
         $scope.myCourses=[];
         $scope.currentCourse=null;
         $scope.appointmentDate=null;
         $scope.appointmentMemo="";
         $scope.appointmentTimeList=null;
-        var learnerId = $rootScope.learnerInfo.learner.id;
-        myCoursesServer.loadMyCourses(learnerId,function (data) {
 
-            $scope.myCourses=data.startCourse;
-            //默认选中第一课
-            if($scope.myCourses.length>0){
-                $scope.currentCourse=$scope.myCourses[0];
+        function loadLearner() {
+            if ( $rootScope.learnerInfo){
+                var learnerId = $rootScope.learnerInfo.learner.id;
+                if (learnerId!=null){
+                    myCoursesServer.loadMyCourses(learnerId,function (data) {
+                        $scope.myCourses=data.startCourse;
+                        //默认选中第一课
+                        if($scope.myCourses.length>0){
+                            $scope.currentCourse=$scope.myCourses[0];
+                        }
+                    });
+                }
             }
-        });
+        }
+        loadLearner();
+        $scope.watch("$root.openid",function (newvalue) {
+            if(!newvalue) return;
+            if(!$rootScope.learnerInfo){
+                stuindexService.loadStuIndex($rootScope.openid,function (data) {
+                    $scope.learnerIndex=data;
+                    $rootScope.learnerInfo = data;
+                    loadLearner();
+                });
+            }
+        },true)
+
 
         $scope.clickCourse=function(course){
             if($scope.currentCourse!=null && course.id!=$scope.currentCourse.id){

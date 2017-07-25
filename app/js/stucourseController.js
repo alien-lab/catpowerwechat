@@ -16,7 +16,7 @@
 
             }
         }
-
+        loadLearner();
         $scope.$watch("$root.openid",function(newvalue){
             if(!newvalue) return;
             if(!$rootScope.learnerInfo){
