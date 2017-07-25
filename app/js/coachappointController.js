@@ -15,8 +15,9 @@
                         type:"success",
                         showConfirmButton:false,
                         timer:1500
+                    },function() {
+                        $state.go('coachindex', null, { reload: true });
                     });
-                    window.setTimeout("location.href='/#!/coachindex'",1800);
                 })
             };
             $scope.rejectAppoint=function () {
@@ -26,8 +27,9 @@
                         type:"success",
                         showConfirmButton:false,
                         timer:1500
+                    },function() {
+                        $state.go('coachindex', null, { reload: true });
                     });
-                    window.setTimeout("location.href='/#!/coachindex'",1800);
                 })
             }
         })
