@@ -81,6 +81,21 @@
                     templateUrl: 'views/keepfit.html',
                     controller:'keepfitController'
                 })
+                .state('coachwriteinfo', {
+                    url: '/coachwriteinfo',
+                    templateUrl: 'views/coachwriteinfo.html',
+                    controller:'coachwriteinfoController'
+                })
+                .state('coachappoint', {
+                    url: '/coachappoint',
+                    templateUrl: 'views/coachappoint.html',
+                    controller:'coachappointController'
+                })
+                .state('coachappointlist', {
+                    url: '/coachappointlist',
+                    templateUrl: 'views/coachappointlist.html',
+                    controller:'coachAppointListController'
+                })
 
             ;
         }])
@@ -250,6 +265,11 @@
                     url: '/coachappoint',
                     templateUrl: 'views/coachappoint.html',
                     controller:'coachappointController'
+                })
+                .state('coachappointlist', {
+                    url: '/coachappointlist',
+                    templateUrl: 'views/coachappointlist.html',
+                    controller:'coachAppointListController'
                 })
 
             ;
