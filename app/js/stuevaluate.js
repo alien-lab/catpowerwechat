@@ -5,7 +5,7 @@
     'use strict';
     var app=angular.module("alienlab");
     app.controller("stuevaluateController",["$scope","stuevaluateService",function($scope,stuevaluateService){
-        stuevaluateService.loadStuEvalute(3,function (data) {
+        stuevaluateService.loadStuEvalute(46,function (data) {
            $scope.courseInfo=data;
             console.log( $scope.courseInfo);
             $scope.status=false;
@@ -21,10 +21,11 @@
             $scope.sureEvaluate=function (service,speciality,coach) {
                 stuevaluateService.setEvalute(service,speciality,coach,"无",0,2,3,function (data) {
                     swal({
-                        title:"您的评价已提交",
+                        title:"学员已收到您的回复",
                         type:"success",
-                        showConfirmButton:false,
-                        timer:2000
+                        showConfirmButton:true,
+                    },function() {
+                        $state.go('stuindex', null, { reload: true });
                     });
                 });
 
@@ -34,10 +35,11 @@
                 console.log(badEvaluate)
                 stuevaluateService.setEvalute(0,0,0,badEvaluate,1,2,3,function (data) {
                     swal({
-                        title:"您的留言已提交",
+                        title:"学员已收到您的回复",
                         type:"success",
-                        showConfirmButton:false,
-                        timer:2000
+                        showConfirmButton:true,
+                    },function() {
+                        $state.go('stuindex', null, { reload: true });
                     });
                 });
             };
