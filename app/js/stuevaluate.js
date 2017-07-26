@@ -4,8 +4,9 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuevaluateController",["$scope","stuevaluateService",function($scope,stuevaluateService){
-        stuevaluateService.loadStuEvalute(46,function (data) {
+    app.controller("stuevaluateController",["$scope","stuevaluateService","$stateParams",function($scope,stuevaluateService,$stateParams){
+        var scheId = $stateParams.scheId;
+        stuevaluateService.loadStuEvalute(scheId,function (data) {
            $scope.courseInfo=data;
             console.log( $scope.courseInfo);
             $scope.status=false;

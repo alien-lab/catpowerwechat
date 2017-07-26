@@ -17,7 +17,7 @@
                     controller: "stuindexController"
                 })
                 .state('stuevaluate', {
-                    url: '/stuevaluate',
+                    url: '/stuevaluate/:scheId',
                     templateUrl: 'views/stuevaluate.html',
                     controller: "stuevaluateController"
                 })
