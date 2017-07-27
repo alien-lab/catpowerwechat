@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("coachappointController",["$scope","coachappointService",function ($scope,coachappointService) {
+    app.controller("coachappointController",["$scope","coachappointService","$state",function ($scope,coachappointService,$state) {
         coachappointService.loadCoachAppoint(1,function (data) {
             $scope.appointment=data;
             console.log($scope.appointment);
@@ -13,8 +13,7 @@
                     swal({
                         title:"您已接受此预约",
                         type:"success",
-                        showConfirmButton:false,
-                        timer:1500
+                        showConfirmButton:true,
                     },function() {
                         $state.go('coachindex', null, { reload: true });
                     });
@@ -25,8 +24,7 @@
                     swal({
                         title:"学员已收到您的回复",
                         type:"success",
-                        showConfirmButton:false,
-                        timer:1500
+                        showConfirmButton:true,
                     },function() {
                         $state.go('coachindex', null, { reload: true });
                     });

@@ -4,11 +4,59 @@
 (function () {
     'user strict';
     var app=angular.module("alienlab");
-    app.controller("coachstuController",["$scope","coachstuService",function ($scope,coachstuService) {
-        coachstuService.loadCoachStu(4,function (data) {
-            $scope.coachstu=data;
-            console.log($scope.coachstu)
-        });
-
+    app.controller("coachAppointListController",["$scope","coachAppointListService","$state",function ($scope,coachAppointListService,$state) {
+        coachAppointListService.loadAppointment(4,function (data) {
+            $scope.appointment=data;
+            console.log($scope.appointment)
+            $scope.acceptAppoint=function (learnerAppointId) {
+                coachAppointListService.updateAppointment(learnerAppointId,"预约成功",function (data) {
+                    swal({
+                        title:"您已接受此预约",
+                        type:"success",
+                        showConfirmButton:true,
+                    },function() {
+                        $state.go('coachappointlist', null, { reload: true });
+                    });
+                })
+            };
+            $scope.rejectAppoint=function (learnerAppointId) {
+                coachAppointListService.updateAppointment(learnerAppointId,"已约满",function (data) {
+                    swal({
+                        title:"学员已收到您的回复",
+                        type:"success",
+                        showConfirmButton:true,
+                    },function() {
+                        $state.go('coachappointlist', null, { reload: true });
+                    });
+                })
+            }
+        })
     }]);
+
+    app.service("coachAppointListService",["$http","domain",function ($http,domain) {
+        this.loadAppointment=function (coachId,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-appointment/coach/'+coachId
+            }).then(function (data) {
+                callback(data.data);
+            })
+        }
+
+        this.updateAppointment=function (appointmentId,appointmentResult,callback) {
+            $http({
+                method:"PUT",
+                url:domain+'api/learner-appointment',
+                data:{
+                    appointmentId:appointmentId,
+                    appointmentResult:appointmentResult
+                }
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data);
+                }
+            })
+        }
+    }])
+
 })();
