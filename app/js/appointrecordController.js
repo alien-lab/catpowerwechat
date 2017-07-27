@@ -5,8 +5,8 @@
     'use strict';
     var app=angular.module("alienlab");
     app.controller("appointrecordController",
-        ["$scope","appointrecordService","$rootScope","stuindexService",
-            function($scope,appointrecordService,$rootScope,stuindexService){
+        ["$scope","appointrecordService","$rootScope","stuindexService","$state",
+            function($scope,appointrecordService,$rootScope,stuindexService,$state){
             function loadLearner(){
                 if($rootScope.learnerInfo){
                     var learnerId = $rootScope.learnerInfo.learner.id;
@@ -29,6 +29,15 @@
                         //出现异常给提示
                        // alert("错误");
                     }
+                    swal({
+                        title:"成功取消预约",
+                        type:"success",
+                        timer:2000,
+                        showConfirmButton:true
+                    },function() {
+                        $state.go('appointrecord', null, { reload: true });
+                    });
+
                 })
             }
         }
@@ -67,13 +76,7 @@
                 }).then(function (data) {
                     if (callback){
                         callback(data.data,true);
-                        swal({
-                            title:"成功取消预约",
-                            type:"success",
-                            timer:2000,
-                            showConfirmButton:false
-                        });
-                        setTimeout('window.location.reload()', 1000);
+
                         //window.setTimeout("location.href='/#!/appointrecord'",1200);
                     }
                 },function(data){
