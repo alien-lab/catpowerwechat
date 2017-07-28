@@ -13,7 +13,7 @@
         $scope.appointmentTimeList=null;
 
         function loadLearner() {
-            if ( $rootScope.learnerInfo){
+            if ($rootScope.learnerInfo){
                 var learnerId = $rootScope.learnerInfo.learner.id;
                 if (learnerId!=null){
                     myCoursesServer.loadMyCourses(learnerId,function (data) {
