@@ -67,8 +67,6 @@
                 }
             })
 
-
-
             this.deleteAppoint =function (param,callback) {
                 $http({
                     method:'DELETE',
