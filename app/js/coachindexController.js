@@ -4,66 +4,22 @@
 (function () {
     'user strict';
     var app=angular.module("alienlab");
-    app.controller("coachindexController",["$scope","coachService",function ($scope,coachService) {
-        $scope.appointInfo = coachService.loadCoachIndex();
-        console.log($scope.appointInfo)
-
-
-
-        //假日期
-        $scope.weeks = [{
-            id:1,
-            week:'周日'
-        },{
-            id:1,
-            week:'周一'
-        },{
-            id:1,
-            week:'周二'
-        },{
-            id:1,
-            week:'周三'
-        },{
-            id:1,
-            week:'周四'
-        },{
-            id:1,
-            week:'周五'
-        },{
-            id:1,
-            week:'周六'
-        }];
-        //排课情况
-        $scope.scheCourse = [{
-            id:1,
-            courseName:'瑜伽',
-            scheTime:'2017/07/21 08:30'
-        },{
-            id:1,
-            courseName:'普拉提',
-            scheTime:'2017/07/21 15:30'
-        }];
-        $scope.scheCourselength = $scope.scheCourse.length;
-        //预约人数
-        $scope.appointmentLearners = [{
-            id:1,
-            headImg:'http://up.qqjia.com/z/face01/face06/facejunyong/junyong04.jpg',
-            learnerName:'学员1'
-        },{
-            id:2,
-            headImg:'http://tupian.enterdesk.com/2014/lxy/2014/12/04/3/5.gif',
-            learnerName:'学员2'
-        },{
-            id:3,
-            headImg:'http://www.feizl.com/upload2007/2014_03/140319194238175.jpg',
-            learnerName:'学员3'
-        }];
-        $scope.appointmentLearnerLength = $scope.appointmentLearners.length;
-
+    app.controller("coachindexController",["$scope","coachService","$filter","coachstuService",function ($scope,coachService,$filter,coachstuService) {
+        $scope.startTime = null;
+        $scope.dt = null;
+        $scope.coachadviceDemo = null;
+        coachstuService.loadCoachStu(7,function (data,flag) {
+            if (!flag){
+                //错误
+            }
+            $scope.coachstu=data;
+            $scope.coachstulength = data.length;
+        });
 
         //日期显示
         $scope.today = function() {
-            $scope.dt = new Date();
+            $scope.dt = $filter('date')(new Date(), 'yyyy-MM-dd');
+            console.log("====================",$scope.dt);
         };
         $scope.today();
 
@@ -92,6 +48,7 @@
 
         $scope.setDate = function(year, month, day) {
             $scope.dt = new Date(year, month, day);
+
         };
 
         var tomorrow = new Date();
@@ -110,11 +67,73 @@
         ];
 
         function getDayClass(data) {
+            //排课情况
+            var time = $filter('date')($scope.dt, 'yyyy-MM-dd')
+            coachService.loadCoachScheInfo (7,time,function (result,flag) {
+                if (!flag){
+                    //错误
+                    return;
+                }
+                $scope.scheCourse = result;
+                $scope.scheCourselength = $scope.scheCourse.length;
+
+            })
+
+            //预约人员和预约人数
+            coachService.loadAppointmentLearner(7,time,function (result,flag) {
+                if (!flag){
+                    //错误
+                    return;
+                }
+                $scope.appointmentLearners = result;
+                $scope.appointmentLearnerLength = $scope.appointmentLearners.length;
+            })
+
+            //预约人数
+            coachService.loadAppointmentNumber(7,time,function (result,flag) {
+                if (!flag){
+                    //错误
+                    return;
+                }
+                $scope.appointmentLearnerNumber = result;
+                $scope.appointmentLearnerNumberLength = $scope.appointmentLearnerNumber.length;
+
+            })
+
+            //教练建议
+            coachService.loadCoachAdviceDemo(7,time,function (result,flag) {
+                if (!flag){
+                    //错误
+                    alert("error1");
+                    return;
+                }
+                $scope.coachadviceDemo = result;
+                console.log("===============",$scope.coachadviceDemo )
+                if($scope.coachadviceDemo){
+                    var length = 0;
+                    angular.forEach($scope.coachadviceDemo,function (item) {
+                        if (item != null) {
+                            if (item.coachAdvice == null || item.coachAdvice == "") {
+
+                                length++;
+                            } else {
+                                console.log("错误！");
+                            }
+                        }
+                        $scope.coachadviceLength = length;
+                    })
+                }else{
+                    $scope.coachadviceLength = 0;
+                    console.log("没有数据！");
+                }
+
+
+            })
+
             var date = data.date,
                 mode = data.mode;
             if (mode === 'day') {
                 var dayToCheck = new Date(date).setHours(0,0,0,0);
-
                 for (var i = 0; i < $scope.events.length; i++) {
                     var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
 
@@ -128,55 +147,67 @@
         }
     }]);
     
-    app.service("coachService",[function () {
-        this.loadCoachIndex=function () {
-            var appointInfo={
-                'appInfo':[
-                    {
-                        "time":"2017-7-8",
-                        "learnerInfo":[
-                            {
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            },{
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            },{
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            }
-                        ]
-                    }
+    app.service("coachService",["domain","$http",function (domain,$http) {
+        this.loadCoachScheInfo = function (coachId,startTime,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/course-schedulings/courseSchedulingBytimeAndId?coachId='+coachId+'&startTime='+startTime
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data,true);
+                }
+            },function(data){
+                if (callback){
+                    callback(data.data,false);
+                }
+            })
+        }
+
+        this.loadAppointmentLearner = function (coachId,startTime,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/buy-courses/learnerbyidandtime?coachId='+coachId+'&appointmentTime='+startTime
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data,true);
+                }
+            },function(data){
+                if (callback){
+                    callback(data.data,false);
+                }
+            })
+        }
+
+        //获取预约人数
+        this.loadAppointmentNumber = function (coachId,appointmentTime,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-appointment/learnerbyidandtime?coachId='+coachId+'&appointmentDate='+appointmentTime
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data,true);
+                }
+            },function(data){
+                if (callback){
+                    callback(data.data,false);
+                }
+            })
+        }
 
 
-                ],
-                'disappInfo':[
-                    {
-                        "time":"2017-7-8",
-                        "learnerInfo":[
-                            {
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            },{
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            },{
-                                'learnerName':'马大哈',
-                                'head':'../img/coach2.jpg',
-                                'courseName':'有氧健身操课'
-                            }
-                        ]
-                    }
-
-
-                ]
-            };
-            return appointInfo;
+        this.loadCoachAdviceDemo  = function (coachId,startTime,callback) {
+            $http({
+                method:'GET',
+                url:domain+'api/learner-infos/advicebyidandtime?coachId='+coachId+'&startTime='+startTime
+            }).then(function (data) {
+                if (callback){
+                    callback(data.data,true);
+                }
+            },function(data){
+                if (callback){
+                    callback(data.data,false);
+                }
+            })
         }
     }]);
 })();
