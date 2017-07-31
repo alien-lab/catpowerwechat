@@ -28,7 +28,8 @@
                 <h5 style="color: #000;min-height: 15px;">{{signlog.course.courseName}}</h5>
                 <h6 style="color: #a1a1a1;min-height: 15px;">{{signlog.coach.coachName}}</h6>
                 <h6 style="color: #a1a1a1;min-height: 15px;">已签到的次数：
-                    <span>{{signlog.courseScheduling.signInCount}}</span>
+                    <span ng-if="signlog.courseScheduling.signInCount">{{signlog.courseScheduling.signInCount}}&nbsp;次</span>
+                    <span ng-if="!signlog.courseScheduling.signInCount">0&nbsp;次</span>
                 </h6>
                 <h6 style="color: #a1a1a1;min-height: 15px;">最新时间：<span>{{signlog.chargeTime | date:'yyyy-MM-dd HH:mm'}}</span></h6>
                 <button type="button" ui-sref= "historylog({courseId:signlog.course.id})" class="btn btn-default" style="border:1px solid #f56158;background: #FFF;color: #f56158;">历史签到记录</a></button>
