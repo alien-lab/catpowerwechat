@@ -4,8 +4,10 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuevaluateController",["$scope","stuevaluateService","$stateParams",function($scope,stuevaluateService,$stateParams){
+    app.controller("stuevaluateController",["$scope","stuevaluateService","$stateParams","$rootScope",function($scope,stuevaluateService,$stateParams,$rootScope){
         var scheId = $stateParams.scheId;
+        var learnerId = $rootScope.learnerInfo.learner.id;
+
         stuevaluateService.loadStuEvalute(scheId,function (data) {
            $scope.courseInfo=data;
             console.log( $scope.courseInfo);
@@ -20,7 +22,7 @@
                 $scope.status=false;
             };
             $scope.sureEvaluate=function (service,speciality,coach) {
-                stuevaluateService.setEvalute(service,speciality,coach,"无",0,2,3,function (data) {
+                stuevaluateService.setEvalute(service,speciality,coach,"无",0,learnerId,scheId,function (data) {
                     swal({
                         title:"学员已收到您的回复",
                         type:"success",
@@ -34,7 +36,7 @@
 
             $scope.sureBadEvaluate=function (badEvaluate) {
                 console.log(badEvaluate)
-                stuevaluateService.setEvalute(0,0,0,badEvaluate,1,2,3,function (data) {
+                stuevaluateService.setEvalute(0,0,0,badEvaluate,1,learnerId,scheId,function (data) {
                     swal({
                         title:"学员已收到您的回复",
                         type:"success",
