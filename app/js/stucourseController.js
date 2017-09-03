@@ -4,7 +4,18 @@
 (function () {
     'use strict';
     var app = angular.module("alienlab");
-    app.controller("stucourseController", ["$scope", "stuCourseService", "$rootScope","stuindexService", function ($scope, stuCourseService,$rootScope,stuindexService) {
+    app.controller("stucourseController", ["$scope", "stuCourseService", "$rootScope","stuindexService","$localStorage",
+        function ($scope, stuCourseService,$rootScope,stuindexService,$localStorage) {
+
+        var openid=$localStorage.openid;
+        if(openid){
+            stuindexService.loadStuIndex(openid,function (data) {
+                $scope.learnerIndex=data;
+                $rootScope.learnerInfo = data;
+                loadLearner();
+            });
+        }
+
         function loadLearner() {
             if($rootScope.learnerInfo){
                 var learnerId = $rootScope.learnerInfo.learner.id;
@@ -16,18 +27,18 @@
 
             }
         }
-        loadLearner();
-        $scope.$watch("$root.openid",function(newvalue){
-            if(!newvalue) return;
-            if(!$rootScope.learnerInfo){
-                stuindexService.loadStuIndex($rootScope.openid,function (data) {
-                    $scope.learnerIndex=data;
-                    $rootScope.learnerInfo = data;
-                    loadLearner();
-                });
-            }
-
-        },true)
+        //loadLearner();
+        // $scope.$watch("$root.openid",function(newvalue){
+        //     if(!newvalue) return;
+        //     if(!$rootScope.learnerInfo){
+        //         stuindexService.loadStuIndex($rootScope.openid,function (data) {
+        //             $scope.learnerIndex=data;
+        //             $rootScope.learnerInfo = data;
+        //             loadLearner();
+        //         });
+        //     }
+        //
+        // },true)
 
     }]);
 
@@ -40,7 +51,7 @@
                 if (callback) {
                     callback(data.data);
                 }
-            })
+            },function(data){})
         }
 
     }])

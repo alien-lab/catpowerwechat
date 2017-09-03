@@ -1,8 +1,8 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuindexController",["$scope","$rootScope","stuindexService",
-            function($scope,$rootScope,stuindexService){
+    app.controller("stuindexController",["$scope","$rootScope","stuindexService","$state",
+            function($scope,$rootScope,stuindexService,$state){
         // $scope.loadAll = true;
         $scope.$watch("$root.openid",function(newvalue,oldvalue){
            // console.log("openid changed:",newvalue);
@@ -22,6 +22,10 @@
                     var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                 }
             });
+        }
+
+        $scope.navClick=function(flag){
+            $state.go(flag);
         }
 
     }]);

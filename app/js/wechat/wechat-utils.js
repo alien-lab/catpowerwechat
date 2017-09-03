@@ -2,87 +2,80 @@
     'use strict';
 
     var app = angular.module("alienlab");
-    app.service("wechatService", ["$http", "domain", "wechatappid", "wechatObject", "$rootScope", "rootpath", "$cookies",
-        function ($http, domain, wechatappid, wechatObject, $rootScope, rootpath, $cookies) {
+    app.service("wechatService", ["$http", "domain", "wechatappid", "wechatObject", "$rootScope", "rootpath", "$cookies","$localStorage",
+        function ($http, domain, wechatappid, wechatObject, $rootScope, rootpath, $cookies,$localStorage) {
         var _this=this;
-        this.wechatConfig = function () {
-                $http({
-                    url: domain + "api/jsapi?url=" + encodeURIComponent(window.location.href),
-                    method: "GET"
-                }).then(function (response) {
-                    wx.config({
-                        debug: false,
-                        appId: response.data.appid,
-                        timestamp: response.data.timestamp,
-                        nonceStr: response.data.nonceStr,
-                        signature: response.data.signature,
-                        jsApiList: [
-                            'checkJsApi',
-                            'onMenuShareTimeline',
-                            'onMenuShareAppMessage',
-                            'onMenuShareQQ',
-                            'onMenuShareWeibo',
-                            'hideMenuItems',
-                            'showMenuItems',
-                            'hideAllNonBaseMenuItem',
-                            'showAllNonBaseMenuItem',
-                            'translateVoice',
-                            'startRecord',
-                            'stopRecord',
-                            'onRecordEnd',
-                            'playVoice',
-                            'pauseVoice',
-                            'stopVoice',
-                            'uploadVoice',
-                            'downloadVoice',
-                            'chooseImage',
-                            'previewImage',
-                            'uploadImage',
-                            'downloadImage',
-                            'getNetworkType',
-                            'openLocation',
-                            'getLocation',
-                            'hideOptionMenu',
-                            'showOptionMenu',
-                            'closeWindow',
-                            'scanQRCode',
-                            'chooseWXPay',
-                            'openProductSpecificView',
-                            'addCard',
-                            'chooseCard',
-                            'openCard'
-                        ]
-                    });
+            this.config=function(){
+                wx.config({
+                    debug: false,
+                    appId: $localStorage.appid,
+                    timestamp: $localStorage.timestamp,
+                    nonceStr: $localStorage.nonceStr,
+                    signature: $localStorage.signature,
+                    jsApiList: [
+                        'checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'hideMenuItems',
+                        'showMenuItems',
+                        'hideAllNonBaseMenuItem',
+                        'showAllNonBaseMenuItem',
+                        'translateVoice',
+                        'startRecord',
+                        'stopRecord',
+                        'onRecordEnd',
+                        'playVoice',
+                        'pauseVoice',
+                        'stopVoice',
+                        'uploadVoice',
+                        'downloadVoice',
+                        'chooseImage',
+                        'previewImage',
+                        'uploadImage',
+                        'downloadImage',
+                        'getNetworkType',
+                        'openLocation',
+                        'getLocation',
+                        'hideOptionMenu',
+                        'showOptionMenu',
+                        'closeWindow',
+                        'scanQRCode',
+                        'chooseWXPay',
+                        'openProductSpecificView',
+                        'addCard',
+                        'chooseCard',
+                        'openCard'
+                    ]
+                });
 
-                    wx.ready(function () {
-                        console.log("wechat jssdk on ready.")
-                        // wx.hideMenuItems({
-                        //     menuList: ["menuItem:share:appMessage",
-                        //         "menuItem:share:timeline",
-                        //         "menuItem:share:qq",
-                        //         "menuItem:share:weiboApp",
-                        //         "menuItem:favorite",
-                        //         "menuItem:share:facebook",
-                        //         "menuItem:share:QZone"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-                        // });
-                        refreshShare({
-                            title: "自然力艺术品展", // 分享标题
-                            link: rootpath + "#!/artworkList",
-                            imgUrl: wechatObject.icon, // 分享图标
-                            desc: wechatObject.nickname + "邀请您来一起看看"
-                        }, {
-                            shareType: "default",
-                            shareContentKey: "0",
-                            user: {
-                                id: wechatObject.id
-                            },
-                            shareTime: new Date(),
-                            shareLink: rootpath + "#!/artworkList"
-                        })
-                        $rootScope.$broadcast("wxready", wx);
-
-                    });
-                }, function () {
+                wx.ready(function () {
+                    console.log("wechat jssdk on ready.")
+                    // wx.hideMenuItems({
+                    //     menuList: ["menuItem:share:appMessage",
+                    //         "menuItem:share:timeline",
+                    //         "menuItem:share:qq",
+                    //         "menuItem:share:weiboApp",
+                    //         "menuItem:favorite",
+                    //         "menuItem:share:facebook",
+                    //         "menuItem:share:QZone"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+                    // });
+                    refreshShare({
+                        title: "猫力健身", // 分享标题
+                        link: rootpath + "#!/",
+                        imgUrl: wechatObject.icon, // 分享图标
+                        desc: wechatObject.nickname + "邀请您来一起看看"
+                    }, {
+                        shareType: "default",
+                        shareContentKey: "0",
+                        user: {
+                            id: wechatObject.id
+                        },
+                        shareTime: new Date(),
+                        shareLink: rootpath + "#!/"
+                    })
+                    $rootScope.$broadcast("wxready", wx);
 
                 });
             }
@@ -111,18 +104,19 @@
 
             }
 
-            this.getWechatUser=function(code){
-                var user=_that.getWechatUserCookies();
+            this.getWechatUser=function(openid){
+                var user=_this.getWechatUserCookies();
                 if(user&&user.openid){
                     wechatObject=user;
                     $rootScope.openid = wechatObject.openid;
                     $rootScope.wechatObject=wechatObject;
                 }else{
-                    _this.loadWechatUser(code);
+                    _this.loadWechatUser(openid);
                 }
             }
             this.getWechatUserCookies=function(){
-                var o=$cookies.getObject("wechatObject");
+                //var o=$cookies.getObject("wechatObject");
+                var o=$localStorage.wechatObject;
                 console.log("cookies wechatobject",o);
                 if(o&&o.openid){
                     $rootScope.isloading = false;
@@ -133,9 +127,9 @@
                 }
                 return null;
             }
-            this.loadWechatUser = function (code) {
+            this.loadWechatUser = function (openid) {
                 $http({
-                    url: domain + "api/getuserinfo?code=" + code,
+                    url: domain + "api/wechat-users/openid/" + openid,
                     method: "GET"
                 }).then(function (response) {
                     console.log(response);
@@ -149,15 +143,14 @@
                         wechatObject.phone = response.data.phone;
                         wechatObject.address = response.data.address;
                         wechatObject.language = response.data.language;
-                        $rootScope.isloading = false;
+
                         $rootScope.openid = wechatObject.openid;
                         $rootScope.wechatObject=wechatObject;
+                        $localStorage.wechatObject=wechatObject;
                         $cookies.putObject("wechatObject", wechatObject);
                     }else{
                         _this.getWechatUserCookies();
                     }
-
-
 
                 });
             }
@@ -173,11 +166,7 @@
             }
 
             this.getAuthUrl = function (url, state) {
-                if (url.indexOf("http") >= 0) {
-
-                } else {
-                    url = (rootpath + "#!" + url);
-                }
+                var url=domain+"wechat/snsapi?router="+url;
                 var link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatappid + "&redirect_uri=" + encodeURIComponent(url) + "&response_type=code&scope=snsapi_userinfo&state=" + state + "#wechat_redirect";
                 //return (rootpath+"#!"+url);
                 return link;
@@ -205,6 +194,7 @@
                 });
             }
         }]);
+
     app.factory("wechatObject", [function () {
         return {
             "id": "",
