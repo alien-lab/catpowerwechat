@@ -127,7 +127,7 @@
                 }
                 return null;
             }
-            this.loadWechatUser = function (openid) {
+            this.loadWechatUser = function (openid,callback) {
                 $http({
                     url: domain + "api/wechat-users/openid/" + openid,
                     method: "GET"
@@ -148,6 +148,10 @@
                         $rootScope.wechatObject=wechatObject;
                         $localStorage.wechatObject=wechatObject;
                         $cookies.putObject("wechatObject", wechatObject);
+
+                        if(callback){
+                            callback(response.data);
+                        }
                     }else{
                         _this.getWechatUserCookies();
                     }

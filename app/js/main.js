@@ -82,7 +82,7 @@
                     controller:'keepfitController'
                 })
                 .state('coachwriteinfo', {
-                    url: '/coachwriteinfo',
+                    url: '/coachwriteinfo/:scheId/:learnerId',
                     templateUrl: 'views/coachwriteinfo.html',
                     controller:'coachwriteinfoController'
                 })
@@ -102,8 +102,8 @@
 })();
 (function () {
     'use strict';
-    angular.module('alienlab').run(['$rootScope', '$log', "wechatService", "$location", "runmodal", "AuthServerProvider","$localStorage",
-        function ($rootScope, $log, wechatService, $location, runmodal, AuthServerProvider,$localStorage) {
+    angular.module('alienlab').run(['$rootScope', '$log', "wechatService", "$location", "runmodal", "AuthServerProvider","$localStorage","stuindexService",
+        function ($rootScope, $log, wechatService, $location, runmodal, AuthServerProvider,$localStorage,stuindexService) {
             var search=$location.search();
             var state=$location.state();
             var hash=$location.hash();
@@ -144,7 +144,18 @@
             }
 
             wechatService.config();
-            wechatService.loadWechatUser($localStorage.openid);
+            wechatService.loadWechatUser($localStorage.openid,function(data){
+                //加载学员，并写入全局
+                stuindexService.loadStuIndex($localStorage.openid,function(studata){
+                   if(studata&&studata.learner){
+                       $localStorage.stuinfo=studata;
+                       $rootScope.learnerInfo=studata;
+                   }
+                });
+
+                //加载教练，并写入全局
+
+            });
 
         }]);
 

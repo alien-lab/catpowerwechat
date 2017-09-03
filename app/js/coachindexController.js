@@ -4,10 +4,16 @@
 (function () {
     'user strict';
     var app=angular.module("alienlab");
-    app.controller("coachindexController",["$scope","coachService","$filter","coachstuService",function ($scope,coachService,$filter,coachstuService) {
+    app.controller("coachindexController",["$scope","coachService","$filter","coachstuService","$localStorage",
+        function ($scope,coachService,$filter,coachstuService,$localStorage) {
         $scope.startTime = null;
         $scope.dt = null;
         $scope.coachadviceDemo = null;
+
+        var openid=$localStorage.openid;
+
+
+
         coachstuService.loadCoachStu(7,function (data,flag) {
             if (!flag){
                 //错误
