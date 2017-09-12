@@ -4,12 +4,13 @@
 (function () {
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("coachappointController",["$scope","coachappointService","$state",function ($scope,coachappointService,$state) {
-        coachappointService.loadCoachAppoint(1,function (data) {
+    app.controller("coachappointController",["$scope","coachappointService","$state","$stateParams",function ($scope,coachappointService,$state,$stateParams) {
+        var appointmentId = $stateParams.appointmentId;
+        coachappointService.loadCoachAppoint(appointmentId,function (data) {
             $scope.appointment=data;
             console.log($scope.appointment);
             $scope.acceptAppoint=function () {
-                coachappointService.updateAppointment(1,"预约成功",function (data) {
+                coachappointService.updateAppointment(appointmentId,"预约成功",function (data) {
                     swal({
                         title:"您已接受此预约",
                         type:"success",
@@ -20,7 +21,7 @@
                 })
             };
             $scope.rejectAppoint=function () {
-                coachappointService.updateAppointment(1,"已约满",function (data) {
+                coachappointService.updateAppointment(appointmentId,"已约满",function (data) {
                     swal({
                         title:"学员已收到您的回复",
                         type:"success",

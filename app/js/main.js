@@ -87,7 +87,7 @@
                     controller:'coachwriteinfoController'
                 })
                 .state('coachappoint', {
-                    url: '/coachappoint',
+                    url: '/coachappoint/:appointmentId',
                     templateUrl: 'views/coachappoint.html',
                     controller:'coachappointController'
                 })
@@ -102,8 +102,8 @@
 })();
 (function () {
     'use strict';
-    angular.module('alienlab').run(['$rootScope', '$log', "wechatService", "$location", "runmodal", "AuthServerProvider","$localStorage","stuindexService",
-        function ($rootScope, $log, wechatService, $location, runmodal, AuthServerProvider,$localStorage,stuindexService) {
+    angular.module('alienlab').run(['$rootScope', '$log', "wechatService", "$location", "runmodal", "AuthServerProvider","$localStorage","stuindexService","coachService",
+        function ($rootScope, $log, wechatService, $location, runmodal, AuthServerProvider,$localStorage,stuindexService,coachService) {
             var search=$location.search();
             var state=$location.state();
             var hash=$location.hash();
@@ -154,7 +154,15 @@
                 });
 
                 //加载教练，并写入全局
+                coachService.loadCoachIndex($localStorage.openid,function (coachdate) {
+                    console.log("========================="+$localStorage.openid)
 
+                    if(coachdate){
+                        $localStorage.coachinfo=coachdate;
+                        console.log("========================="+$localStorage.coachinfo)
+                        $rootScope.coachInfo=coachdate;
+                    }
+                })
             });
 
         }]);

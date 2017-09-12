@@ -4,17 +4,27 @@
 (function () {
     'user strict';
     var app=angular.module("alienlab");
-    app.controller("coachindexController",["$scope","coachService","$filter","coachstuService","$localStorage",
-        function ($scope,coachService,$filter,coachstuService,$localStorage) {
+    app.controller("coachindexController",["$scope","coachService","$filter","coachstuService","$localStorage","$rootScope",
+        function ($scope,coachService,$filter,coachstuService,$localStorage,$rootScope) {
         $scope.startTime = null;
         $scope.dt = null;
         $scope.coachadviceDemo = null;
 
+        var coachid = $localStorage.coachinfo.id
+
+
         var openid=$localStorage.openid;
+        if(openid){
+            coachService.loadCoachIndex(openid,function (data) {
+                $scope.coachIndex=data;
+
+                $rootScope.coachInfo = data;
 
 
 
-        coachstuService.loadCoachStu(7,function (data,flag) {
+            });
+        }
+        coachstuService.loadCoachStu(coachid,function (data,flag) {
             if (!flag){
                 //错误
             }
@@ -75,7 +85,7 @@
         function getDayClass(data) {
             //排课情况
             var time = $filter('date')($scope.dt, 'yyyy-MM-dd')
-            coachService.loadCoachScheInfo (7,time,function (result,flag) {
+            coachService.loadCoachScheInfo (coachid,time,function (result,flag) {
                 if (!flag){
                     //错误
                     return;
@@ -86,7 +96,7 @@
             })
 
             //预约人员和预约人数
-            coachService.loadAppointmentLearner(7,time,function (result,flag) {
+            coachService.loadAppointmentLearner(coachid,time,function (result,flag) {
                 if (!flag){
                     //错误
                     return;
@@ -96,7 +106,7 @@
             })
 
             //预约人数
-            coachService.loadAppointmentNumber(7,time,function (result,flag) {
+            coachService.loadAppointmentNumber(coachid,time,function (result,flag) {
                 if (!flag){
                     //错误
                     return;
@@ -107,14 +117,14 @@
             })
 
             //教练建议
-            coachService.loadCoachAdviceDemo(7,time,function (result,flag) {
+            coachService.loadCoachAdviceDemo(coachid,time,function (result,flag) {
                 if (!flag){
                     //错误
                     alert("error1");
                     return;
                 }
                 $scope.coachadviceDemo = result;
-                console.log("===============",$scope.coachadviceDemo )
+               // console.log("===============",$scope.coachadviceDemo )
                 if($scope.coachadviceDemo){
                     var length = 0;
                     angular.forEach($scope.coachadviceDemo,function (item) {
@@ -215,5 +225,18 @@
                 }
             })
         }
+
+
+        this.loadCoachIndex = function (openid, callback) {
+            $http({
+                method: 'GET',
+                url: domain + '/api/coaches/info?openid=' + openid
+            }).then(function (data) {
+                if (callback) {
+                    callback(data.data);
+                }
+            })
+        }
+
     }]);
 })();
