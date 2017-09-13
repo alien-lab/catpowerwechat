@@ -4,7 +4,8 @@
 (function () {
     'use strict'
     var app=angular.module("alienlab");
-    app.controller("fitinformationController",["$scope","fitnessService","stuindexService","$rootScope",function ($scope,fitnessService,stuindexService,$rootScope) {
+    app.controller("fitinformationController",["$scope","fitnessService","stuindexService","$rootScope","$localStorage",
+        function ($scope,fitnessService,stuindexService,$rootScope,$localStorage) {
         function loadLearner(){
             if($rootScope.learnerInfo){
                 var learnerId = $rootScope.learnerInfo.learner.id;
@@ -15,7 +16,17 @@
                 }
             }
         }
-        loadLearner();
+
+        var openid=$localStorage.openid;
+        if(openid){
+            stuindexService.loadStuIndex(openid,function (data) {
+                $scope.learnerIndex=data;
+                $rootScope.learnerInfo = data;
+                loadLearner();
+
+            });
+        }
+        /*loadLearner();
         $scope.$watch("$root.openid",function (newValue) {
             if (!newValue)return;
             if (!$scope.learnerInfo){
@@ -25,7 +36,7 @@
                     loadLearner();
                 });
             }
-        },true);
+        },true);*/
 
     }]);
     app.service("fitnessService",["$http","domain",function ($http,domain) {

@@ -1,10 +1,19 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuindexController",["$scope","$rootScope","stuindexService","$state",
-            function($scope,$rootScope,stuindexService,$state){
+    app.controller("stuindexController",["$scope","$rootScope","stuindexService","$state","$localStorage",
+            function($scope,$rootScope,stuindexService,$state,$localStorage){
         // $scope.loadAll = true;
-        $scope.$watch("$root.openid",function(newvalue,oldvalue){
+
+        var openid=$localStorage.openid;
+        if(openid){
+            stuindexService.loadStuIndex(openid,function (data) {
+                $scope.learnerIndex=data;
+                $rootScope.learnerInfo = data;
+
+            });
+        }
+       /* $scope.$watch("$root.openid",function(newvalue,oldvalue){
            // console.log("openid changed:",newvalue);
             if(newvalue&&newvalue!=""){
                 stuindexService.loadStuIndex($rootScope.openid,function (data) {
@@ -12,7 +21,9 @@
                     $rootScope.learnerInfo = data;
                 });
             }
-        },true);
+        },true);*/
+
+
 
         $scope.sign=function () {
             wx.scanQRCode({

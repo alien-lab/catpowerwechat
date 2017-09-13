@@ -4,8 +4,8 @@
 (function(){
     'use strict';
     var app=angular.module("alienlab");
-    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter","$rootScope","$state","stuindexService",
-        function($scope,appointmentTimeServer,myCoursesServer,$filter,$rootScope,$state,stuindexService){
+    app.controller("stuappointmentController",["$scope","appointmentTimeServer","myCoursesServer","$filter","$rootScope","$state","stuindexService","$localStorage",
+        function($scope,appointmentTimeServer,myCoursesServer,$filter,$rootScope,$state,stuindexService,$localStorage){
         $scope.myCourses=[];
         $scope.currentCourse=null;
         $scope.appointmentDate=null;
@@ -26,7 +26,15 @@
                 }
             }
         }
-        loadLearner();
+        var openid=$localStorage.openid;
+        if(openid){
+            stuindexService.loadStuIndex(openid,function (data) {
+                $scope.learnerIndex=data;
+                $rootScope.learnerInfo = data;
+                loadLearner();
+            });
+        }
+        /*loadLearner();
         $scope.$watch("$root.openid",function (newvalue) {
             if(!newvalue) return;
             if(!$rootScope.learnerInfo){
@@ -36,7 +44,7 @@
                     loadLearner();
                 });
             }
-        },true)
+        },true)*/
 
 
         $scope.clickCourse=function(course){
