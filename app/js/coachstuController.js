@@ -4,8 +4,13 @@
 (function () {
     'user strict';
     var app=angular.module("alienlab");
-    app.controller("coachstuController",["$scope","coachstuService",function ($scope,coachstuService) {
-        coachstuService.loadCoachStu(4,function (data) {
+    app.controller("coachstuController",["$scope","coachstuService","$localStorage",function ($scope,coachstuService,$localStorage) {
+        var coachid = null;
+        if ($localStorage.coachinfo){
+            coachid = $localStorage.coachinfo.id;
+        }
+
+        coachstuService.loadCoachStu(coachid,function (data) {
             $scope.coachstu=data;
             console.log($scope.coachstu)
         });

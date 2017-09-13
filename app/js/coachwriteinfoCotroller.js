@@ -4,14 +4,18 @@
 (function () {
     'user strict';
     var app = angular.module("alienlab");
-    app.controller("coachwriteinfoController",["$scope","coachwriteinfoService",function ($scope,coachwriteinfoService) {
+    app.controller("coachwriteinfoController",["$scope","coachwriteinfoService","$stateParams",
+        function ($scope,coachwriteinfoService,$stateParams) {
         $scope.submit=function (foodAdvice,exerciseAdvice) {
             console.log(foodAdvice,exerciseAdvice)
             var coachAdvice={
               "foodAdvice":foodAdvice,
               "exerciseAdvice":exerciseAdvice
             };
-            coachwriteinfoService.insertLearnerInfo(coachAdvice,2,3,function (data) {
+            var learnerId = $stateParams.learnerId;
+            var scheId = $stateParams.scheId;
+
+            coachwriteinfoService.insertLearnerInfo(coachAdvice,learnerId,scheId,function (data) {
                 swal({
                     title:"您填写的学员健身反馈已提交",
                     type:"success",
