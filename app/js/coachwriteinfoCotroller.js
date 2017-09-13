@@ -7,7 +7,7 @@
     app.controller("coachwriteinfoController",["$scope","coachwriteinfoService","$stateParams","$state",
         function ($scope,coachwriteinfoService,$stateParams,$state) {
         $scope.submit=function (foodAdvice,exerciseAdvice) {
-            console.log(foodAdvice,exerciseAdvice)
+           // console.log(foodAdvice,exerciseAdvice)
             var coachAdvice={
               "foodAdvice":foodAdvice,
               "exerciseAdvice":exerciseAdvice
@@ -32,7 +32,7 @@
 
     app.service("coachwriteinfoService",["$http","domain",function ($http,domain) {
         this.insertLearnerInfo=function (coachAdvice,learnerId,scheId,callback) {
-            console.log("你好，我是按钮的事件！");
+
             $http({
                 method:"POST",
                 url:domain+'api/learner-infos/fitlog',
